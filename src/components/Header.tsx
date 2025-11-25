@@ -71,7 +71,7 @@ const Header = () => {
   <img
     src={logo}
     alt="Kunjwal City Logo"
-    className="w-24 h-24 object-contain"
+  className="w-32 h-32 md:w-32 md:h-32 object-contain"
   />
 </button>
 

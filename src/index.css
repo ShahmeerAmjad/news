@@ -102,3 +102,47 @@
     @apply bg-background text-foreground;
   }
 }
+/* ========================================
+   HERO CAROUSEL - FINAL FIX
+   ======================================== */
+
+/* Force carousel container height */
+.slick-slider,
+.slick-list,
+.slick-track {
+  height: inherit !important;
+}
+
+.slick-slide {
+  height: inherit !important;
+}
+
+.slick-slide > div {
+  height: inherit !important;
+}
+
+/* Hide overflow */
+.slick-slider {
+  overflow: hidden !important;
+}
+
+/* Mobile arrows adjustment */
+@media (max-width: 767px) {
+  .slick-prev,
+  .slick-next {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  
+  .slick-prev {
+    left: 10px !important;
+  }
+  
+  .slick-next {
+    right: 10px !important;
+  }
+  
+  .slick-dots {
+    bottom: 15px !important;
+  }
+}

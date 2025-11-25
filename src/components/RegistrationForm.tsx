@@ -2,13 +2,6 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
 const RegistrationForm = () => {
@@ -31,16 +24,9 @@ const RegistrationForm = () => {
   const validateForm = () => {
     let newErrors: { [key: string]: string } = {};
 
+    // Only name and phone are mandatory
     if (!formData.name.trim()) newErrors.name = "Full name is required";
     if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
-    if (!formData.email.trim()) newErrors.email = "Email is required";
-    if (!formData.country) newErrors.country = "Country is required";
-
-    if (formData.country === "pakistan" && !formData.city.trim()) {
-      newErrors.city = "City is required for Pakistan";
-    }
-
-    if (!formData.message.trim()) newErrors.message = "Message is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -59,7 +45,7 @@ const RegistrationForm = () => {
         });
 
         if (res.ok) {
-          alert("Form submitted successfully!");
+          alert("Thank you! We'll contact you soon.");
           setFormData({
             name: "",
             phone: "",
@@ -70,27 +56,31 @@ const RegistrationForm = () => {
           });
         } else {
           const data = await res.json();
-          alert(data.error || "Something went wrong!");
+          alert(data.error || "Something went wrong. Please try again.");
         }
       } catch (err) {
         console.error(err);
-        alert("Failed to connect to server.");
+        alert("Failed to connect to server. Please try again.");
       }
     }
   };
 
   return (
     <section id="register" className="py-20 bg-slate-100 scroll-mt-24">
-      <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
-        <h2 className="text-4xl lg:text-5xl font-bold text-center mb-12 bg-gradient-to-r from-[#b38c2e] to-[#e4c152] bg-clip-text text-transparent">
-          Register Your Interest
+      <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
+        <h2 className="text-4xl lg:text-5xl font-bold text-center mb-4 bg-gradient-to-r from-[#b38c2e] to-[#e4c152] bg-clip-text text-transparent">
+          Book Your Plot Today
         </h2>
+        
+        <p className="text-center text-gray-600 mb-12 text-lg">
+          Fill in your details and our team will contact you within 24 hours
+        </p>
 
         <form className="space-y-8" onSubmit={handleSubmit}>
-          {/* Full Name & Phone */}
+          {/* Full Name & Phone (Mandatory) */}
           <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-lg font-medium text-[#b38c2e]">
+              <Label htmlFor="name" className="text-lg font-semibold text-[#b38c2e]">
                 Full name *
               </Label>
               <Input
@@ -98,13 +88,14 @@ const RegistrationForm = () => {
                 type="text"
                 value={formData.name}
                 onChange={(e) => handleChange("name", e.target.value)}
-                className="bg-transparent border-[#b38c2e]/30 border-b-2 border-t-0 border-x-0 rounded-none text-black"
+                placeholder="Enter your full name"
+                className="bg-transparent border-[#b38c2e]/30 border-b-2 border-t-0 border-x-0 rounded-none text-black placeholder:text-gray-400"
               />
               {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="phone" className="text-lg font-medium text-[#b38c2e]">
+              <Label htmlFor="phone" className="text-lg font-semibold text-[#b38c2e]">
                 Phone No. *
               </Label>
               <Input
@@ -112,79 +103,74 @@ const RegistrationForm = () => {
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => handleChange("phone", e.target.value)}
-                className="bg-transparent border-[#b38c2e]/30 border-b-2 border-t-0 border-x-0 rounded-none text-black"
+                placeholder="+92 300 1234567"
+                className="bg-transparent border-[#b38c2e]/30 border-b-2 border-t-0 border-x-0 rounded-none text-black placeholder:text-gray-400"
               />
               {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
             </div>
           </div>
 
-          {/* Email */}
+          {/* Email (Optional) */}
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-lg font-medium text-[#b38c2e]">
-              Email Address *
+            <Label htmlFor="email" className="text-lg font-medium text-gray-600">
+              Email Address <span className="text-sm text-gray-300">(Optional)</span>
             </Label>
             <Input
               id="email"
               type="email"
               value={formData.email}
               onChange={(e) => handleChange("email", e.target.value)}
-              className="bg-transparent border-[#b38c2e]/30 border-b-2 border-t-0 border-x-0 rounded-none text-black"
+              placeholder="your.email@example.com"
+              className="bg-transparent border-[#b38c2e]/30 border-b-2 border-t-0 border-x-0 rounded-none text-black placeholder:text-gray-400"
             />
-            {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
           </div>
 
-          {/* Country */}
-          <div className="space-y-2">
-            <Label htmlFor="country" className="text-lg font-medium text-[#b38c2e]">
-              Country *
-            </Label>
-            <Select onValueChange={(value) => handleChange("country", value)} value={formData.country}>
-              <SelectTrigger className="bg-transparent border-[#b38c2e]/30 border-b-2 border-t-0 border-x-0 rounded-none text-black">
-                <SelectValue placeholder="Select Country" />
-              </SelectTrigger>
-              <SelectContent className="bg-card border-border text-white">
-                <SelectItem value="pakistan">Pakistan</SelectItem>
-                <SelectItem value="uae">UAE</SelectItem>
-                <SelectItem value="uk">United Kingdom</SelectItem>
-                <SelectItem value="usa">United States</SelectItem>
-                <SelectItem value="spain">Spain</SelectItem>
-                <SelectItem value="canada">Canada</SelectItem>
-              </SelectContent>
-            </Select>
-            {errors.country && <p className="text-red-500 text-sm">{errors.country}</p>}
+          {/* Country & City (Optional) */}
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="space-y-2">
+              <Label htmlFor="country" className="text-lg font-medium text-gray-600">
+                Country <span className="text-sm text-gray-300">(Optional)</span>
+              </Label>
+              <Input
+                id="country"
+                type="text"
+                value={formData.country}
+                onChange={(e) => handleChange("country", e.target.value)}
+                placeholder="Pakistan, UAE, UK, etc."
+                className="bg-transparent border-[#b38c2e]/30 border-b-2 border-t-0 border-x-0 rounded-none text-black placeholder:text-gray-400"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="city" className="text-lg font-medium text-gray-600">
+                City <span className="text-sm text-gray-300">(Optional)</span>
+              </Label>
+              <Input
+                id="city"
+                type="text"
+                value={formData.city}
+                onChange={(e) => handleChange("city", e.target.value)}
+                placeholder="Lahore, Dubai, London, etc."
+                className="bg-transparent border-[#b38c2e]/30 border-b-2 border-t-0 border-x-0 rounded-none text-black placeholder:text-gray-400"
+              />
+            </div>
           </div>
 
-          {/* City */}
+          {/* Message (Optional) */}
           <div className="space-y-2">
-            <Label htmlFor="city" className="text-lg font-medium text-[#b38c2e]">
-              City {formData.country === "pakistan" && "*"}
-            </Label>
-            <Input
-              id="city"
-              type="text"
-              value={formData.city}
-              onChange={(e) => handleChange("city", e.target.value)}
-              className="bg-transparent border-[#b38c2e]/30 border-b-2 border-t-0 border-x-0 rounded-none text-black"
-              placeholder="Enter your city"
-            />
-            {errors.city && <p className="text-red-500 text-sm">{errors.city}</p>}
-          </div>
-
-          {/* Message */}
-          <div className="space-y-2">
-            <Label htmlFor="message" className="text-lg font-medium text-[#b38c2e]">
-              Message *
+            <Label htmlFor="message" className="text-lg font-medium text-gray-600">
+              Message <span className="text-sm text-gray-300">(Optional)</span>
             </Label>
             <Textarea
               id="message"
               value={formData.message}
               onChange={(e) => handleChange("message", e.target.value)}
-              className="bg-transparent border-[#b38c2e]/30 border-b-2 border-t-0 border-x-0 rounded-none min-h-[100px] resize-none text-black"
+              placeholder="Tell us about your requirements or any questions you have..."
+              className="bg-transparent border-[#b38c2e]/30 border-b-2 border-t-0 border-x-0 rounded-none min-h-[100px] resize-none text-black placeholder:text-gray-400"
             />
-            {errors.message && <p className="text-red-500 text-sm">{errors.message}</p>}
           </div>
 
-          {/* Submit */}
+          {/* Submit Button */}
           <div className="pt-8 text-center">
             <Button
               type="submit"
@@ -194,6 +180,11 @@ const RegistrationForm = () => {
               Submit
             </Button>
           </div>
+
+          {/* Privacy Note */}
+          <p className="text-center text-sm text-gray-500 mt-4">
+            Your information is safe with us. We respect your privacy.
+          </p>
         </form>
       </div>
     </section>
