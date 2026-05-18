@@ -1,142 +1,209 @@
 import React from 'react';
-import { Facebook, Instagram, Youtube, Linkedin, Home, ChevronUp } from 'lucide-react';
+import { Facebook, Instagram, ChevronUp, MapPin, Clock, Mail, Phone } from 'lucide-react';
 import paymentPdf from "@/assets/payment.pdf";
 import mapPdf from "@/assets/map.pdf";
 import mapThumb from "@/assets/New/1.jpg";
 import logo from "@/assets/logo.png";
 
 const Footer = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const downloadFile = (href: string, filename: string) => {
+    const a = document.createElement('a');
+    a.href = href;
+    a.download = filename;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   };
 
   return (
-    <footer className="bg-[#014b76] border-t border-border text-white">
-      <div className="container mx-auto px-4 lg:px-8 py-24">
-        <div className="grid lg:grid-cols-3 gap-12">
-          {/* Company Info */}
-          <div className="space-y-6">
-            <div className="flex items-center space-x-3">
-              <img src={logo} alt="Kunjwal City" className="h-16 md:h-20 w-auto rounded-md" />
-            </div>
-            <p className="text-gray-200 leading-relaxed">
-              Kunjwal City offers premium residential plots in Gujrat with modern amenities and transparent dealing.
-            </p>
+    <>
+      <footer className="relative bg-[#010f1e] text-[#f5f0e8]">
+        {/* Top gold rule */}
+        <div className="h-px bg-gradient-to-r from-transparent via-[#b38c2e] to-transparent" />
 
-            <button
-              onClick={() => {
-                const a = document.createElement('a');
-                a.href = paymentPdf;
-                a.download = 'payment.pdf';
-                a.target = '_blank';
-                a.rel = 'noopener noreferrer';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-              }}
-              className="mt-2 inline-block bg-gradient-to-r from-[#b38c2e] to-[#e4c152] hover:opacity-90 text-white px-6 py-3 rounded-lg text-lg font-medium shadow-[0_0_15px_rgba(228,193,82,0.5)] transition-all"
-            >
-              Payment Plan
-            </button>
+        <div className="container mx-auto px-6 lg:px-10 py-20 lg:py-28">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-14 lg:gap-10">
 
-            <button
-              onClick={() => {
-                const a = document.createElement('a');
-                a.href = mapPdf;
-                a.download = 'map.pdf';
-                a.target = '_blank';
-                a.rel = 'noopener noreferrer';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-              }}
-              className="ml-8 mt-2 inline-block bg-gradient-to-r from-[#b38c2e] to-[#e4c152] hover:opacity-90 text-white px-6 py-3 rounded-lg text-lg font-medium shadow-[0_0_15px_rgba(228,193,82,0.5)] transition-all"
-            >
-              Map
-            </button>
-          </div>
+            {/* Column 1 — Brand */}
+            <div className="space-y-6">
+              <button onClick={scrollToTop} className="block">
+                <img
+                  src={logo}
+                  alt="Kanjwal City"
+                  className="h-20 md:h-24 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
+                />
+              </button>
 
-          {/* Our Location */}
-          <div className="space-y-6">
-            <h3 className="text-2xl font-bold text-[#e4c152]">Our Location</h3>
-            <div className="space-y-4">
-              <div>
-                <h4 className="text-[#e4c152] font-semibold mb-2">Head Office</h4>
-                <p className="text-gray-200 text-sm">
-                  13-km, Sargodha Road<br />Gujrat, Punjab
-                </p>
-              </div>
-              <div>
-                <h4 className="text-[#e4c152] font-semibold mb-2">Office Hours</h4>
-                <p className="text-gray-200 text-sm">Mon - Sun: 9:00 AM - 6:00 PM</p>
-              </div>
-            </div>
-          </div>
+              <p className="font-display italic text-[#b38c2e]/80 text-base tracking-wide">
+                Where Vision Meets Legacy
+              </p>
 
-          {/* Get In Touch */}
-          <div className="space-y-6">
-            <h3 className="text-2xl font-bold text-[#e4c152]">Get In Touch</h3>
-            <div className="space-y-4">
-              <div>
-                <h4 className="text-[#e4c152] font-semibold mb-1">Email</h4>
-                <p className="text-gray-200">info@kunjwalcity.pk</p>
-              </div>
-              <div>
-                <h4 className="text-[#e4c152] font-semibold mb-1">Phone</h4>
-                <p className="text-gray-200">+92 3111786602</p>
+              <p className="font-body font-light text-[#9bb8c4] text-sm leading-7 max-w-xs">
+                Kanjwal City offers premium residential plots in Gujrat with modern amenities
+                and transparent dealing by AYS Developers.
+              </p>
+
+              {/* Document buttons */}
+              <div className="flex flex-wrap gap-3 pt-2">
+                <button
+                  onClick={() => downloadFile(paymentPdf, 'kanjwal-city-payment-plan.pdf')}
+                  className="luxury-btn-outline !py-2.5 !px-5 !text-[10px]"
+                >
+                  <span>Payment Plan</span>
+                </button>
+                <button
+                  onClick={() => downloadFile(mapPdf, 'kanjwal-city-map.pdf')}
+                  className="luxury-btn-outline !py-2.5 !px-5 !text-[10px]"
+                >
+                  <span>Site Map</span>
+                </button>
               </div>
             </div>
 
-            <div className="space-y-2">
-              <div className="relative group w-40 h-28 rounded-lg overflow-hidden shadow-lg cursor-pointer">
+            {/* Column 2 — Location */}
+            <div className="space-y-6">
+              <h3 className="font-display italic text-[#e4c152] text-2xl font-light">
+                Our Location
+              </h3>
+              <div className="h-px bg-gradient-to-r from-[#b38c2e]/40 to-transparent" />
+
+              <div className="space-y-5">
+                <div className="flex gap-4">
+                  <MapPin className="w-4 h-4 text-[#b38c2e] flex-shrink-0 mt-1" />
+                  <div>
+                    <div className="font-body text-[9px] tracking-[0.22em] uppercase text-[#b38c2e] mb-1">Head Office</div>
+                    <p className="font-body font-light text-[#9bb8c4] text-sm leading-6">
+                      13-km, Sargodha Road<br />Gujrat, Punjab
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <Clock className="w-4 h-4 text-[#b38c2e] flex-shrink-0 mt-1" />
+                  <div>
+                    <div className="font-body text-[9px] tracking-[0.22em] uppercase text-[#b38c2e] mb-1">Office Hours</div>
+                    <p className="font-body font-light text-[#9bb8c4] text-sm">Mon – Sun: 9:00 AM – 6:00 PM</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Column 3 — Contact */}
+            <div className="space-y-6">
+              <h3 className="font-display italic text-[#e4c152] text-2xl font-light">
+                Get In Touch
+              </h3>
+              <div className="h-px bg-gradient-to-r from-[#b38c2e]/40 to-transparent" />
+
+              <div className="space-y-5">
+                <div className="flex gap-4">
+                  <Mail className="w-4 h-4 text-[#b38c2e] flex-shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-body text-[9px] tracking-[0.22em] uppercase text-[#b38c2e] mb-1">Email</div>
+                    <a
+                      href="mailto:info@kanjwalcity.pk"
+                      className="font-body font-light text-[#9bb8c4] text-sm hover:text-[#e4c152] transition-colors"
+                    >
+                      info@kanjwalcity.pk
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <Phone className="w-4 h-4 text-[#b38c2e] flex-shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-body text-[9px] tracking-[0.22em] uppercase text-[#b38c2e] mb-1">Phone</div>
+                    <a
+                      href="tel:+923111786602"
+                      className="font-body font-light text-[#9bb8c4] text-sm hover:text-[#e4c152] transition-colors"
+                    >
+                      +92 311 1786602
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Map thumbnail */}
+              <div className="space-y-3">
+                <div className="relative group w-44 h-28 overflow-hidden border border-[#b38c2e]/20 hover:border-[#b38c2e]/50 transition-colors">
+                  <a
+                    href="https://maps.app.goo.gl/f6oJER8r31X2gmcYA"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full h-full"
+                    title="View on Google Maps"
+                  >
+                    <img
+                      src={mapThumb}
+                      alt="Kanjwal City Location"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-[#012d47]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <MapPin className="text-[#e4c152] w-7 h-7" />
+                    </div>
+                  </a>
+                </div>
                 <a
                   href="https://maps.app.goo.gl/f6oJER8r31X2gmcYA"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full h-full"
-                  title="Open Map"
+                  className="font-body text-[9px] tracking-[0.2em] uppercase text-[#b38c2e] hover:text-[#e4c152] transition-colors"
                 >
-                  <img
-                    src={mapThumb}
-                    alt="Kunjwal City Map"
-                    className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-[#014b76]/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <Home className="text-white w-10 h-10" />
-                  </div>
+                  View on Maps →
                 </a>
               </div>
-              <a
-                href="https://maps.app.goo.gl/f6oJER8r31X2gmcYA"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block mt-2 bg-gradient-to-r from-[#b38c2e] to-[#e4c152] hover:opacity-90 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-[0_0_15px_rgba(228,193,82,0.5)] transition-all"
-              >
-                View Map
-              </a>
-            </div>
 
-            {/* Social Media */}
-            <div className="flex items-center space-x-4">
-              <a href="https://www.facebook.com/profile.php?id=61579390076883" className="w-12 h-12 bg-[#b38c2e] rounded-full flex items-center justify-center hover:scale-110 transition-transform">
-                <Facebook className="w-5 h-5 text-white" />
-              </a>
-              <a href="https://www.instagram.com/kunjwalcity.gujrat?igsh=MW02NzUxMWxqMHlkMw==" className="w-12 h-12 bg-gradient-to-br from-[#b38c2e] to-[#e4c152] rounded-full flex items-center justify-center hover:scale-110 transition-transform">
-                <Instagram className="w-5 h-5 text-white" />
-              </a>
+              {/* Social */}
+              <div className="flex gap-3 pt-1">
+                <a
+                  href="https://www.facebook.com/profile.php?id=61579390076883"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 flex items-center justify-center border border-[#b38c2e]/40 text-[#b38c2e] hover:bg-[#b38c2e] hover:text-white hover:border-[#b38c2e] transition-all duration-300"
+                  aria-label="Facebook"
+                >
+                  <Facebook className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://www.instagram.com/kunjwalcity.gujrat?igsh=MW02NzUxMWxqMHlkMw=="
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 flex items-center justify-center border border-[#b38c2e]/40 text-[#b38c2e] hover:bg-gradient-to-br hover:from-[#b38c2e] hover:to-[#e4c152] hover:text-white hover:border-transparent transition-all duration-300"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="w-4 h-4" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Scroll to Top Button */}
+        {/* Bottom bar */}
+        <div className="border-t border-[#b38c2e]/15">
+          <div className="container mx-auto px-6 lg:px-10 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="font-body text-[9px] tracking-[0.2em] uppercase text-[#9bb8c4]/50">
+              © {new Date().getFullYear()} Kanjwal City · AYS Developers (Pvt.) Ltd. · All Rights Reserved
+            </p>
+            <p className="font-body text-[9px] tracking-[0.15em] uppercase text-[#9bb8c4]/35">
+              Gujrat · Punjab · Pakistan
+            </p>
+          </div>
+        </div>
+      </footer>
+
+      {/* Scroll to Top — positioned above WhatsApp */}
       <button
         onClick={scrollToTop}
-        className="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-r from-[#b38c2e] to-[#e4c152] rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(228,193,82,0.5)] hover:opacity-90 transition-all z-40"
+        className="scroll-top-btn w-11 h-11 border border-[#b38c2e]/60 hover:border-[#e4c152] hover:bg-[#b38c2e]/20 text-[#e4c152] flex items-center justify-center transition-all duration-300"
+        aria-label="Scroll to top"
       >
-        <ChevronUp className="w-6 h-6 text-white" />
+        <ChevronUp className="w-5 h-5" />
       </button>
-    </footer>
+    </>
   );
 };
 

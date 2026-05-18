@@ -1,99 +1,184 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 import gated from "@/assets/IMG-20250920-WA0010.jpg";
-import Mosque from "@/assets/IMG-20250920-WA0012.jpg";
+import mosque from "@/assets/IMG-20250920-WA0012.jpg";
 import play from "@/assets/IMG-20250920-WA0018.jpg";
-
 import security from "@/assets/closed-circuit-security-cameras.jpg";
 import park from "@/assets/images.jpg";
 
 const amenities = [
   { title: 'Gated Community', img: gated, key: 'gated-community' },
-  { title: 'Grand Mosque', img: Mosque, key: 'grand-mosque' },
+  { title: 'Grand Mosque', img: mosque, key: 'grand-mosque' },
   { title: 'Kids Play Area', img: play, key: 'kids-play-area' },
   { title: '24/7 Security', img: security, key: 'security' },
-  { title: 'Park', img: park, key: 'park' },
+  { title: 'Park & Gardens', img: park, key: 'park' },
 ];
-
-const LeftArrow = () => (
-  <svg width="36" height="36" fill="none" viewBox="0 0 36 36">
-    <path d="M24 30L12 18L24 6" stroke="#88B613" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const RightArrow = () => (
-  <svg width="36" height="36" fill="none" viewBox="0 0 36 36">
-    <path d="M12 6L24 18L12 30" stroke="#88B613" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
 
 const ITEMS_VISIBLE = 3;
 
 const AmenitiesSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
   const maxIndex = amenities.length - ITEMS_VISIBLE;
 
-  const handlePrev = () => setCurrentIndex(prev => Math.max(prev - 1, 0));
-  const handleNext = () => setCurrentIndex(prev => Math.min(prev + 1, maxIndex));
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.querySelectorAll('.section-reveal').forEach((el, i) => {
+              setTimeout(() => el.classList.add('revealed'), i * 100);
+            });
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
 
-  const getCardIndexFraction = (idx) => {
-    return `${String(idx + 1).padStart(2, '0')}/${String(amenities.length).padStart(2, '0')}`;
+  const handlePrev = () => setCurrentIndex((prev) => Math.max(prev - 1, 0));
+  const handleNext = () => setCurrentIndex((prev) => Math.min(prev + 1, maxIndex));
+
+  const romanNumeral = (n: number) => {
+    const numerals = ['I', 'II', 'III', 'IV', 'V'];
+    return numerals[n] || String(n + 1);
   };
 
   return (
-    <section id="amenities" className="py-16 bg-[#F9F9F9] relative overflow-hidden scroll-mt-24">
-      <div className="container mx-auto px-4 lg:px-8">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-2">
+    <section
+      id="amenities"
+      ref={sectionRef}
+      className="relative py-24 lg:py-32 bg-[#014b76] overflow-hidden scroll-mt-20"
+    >
+      {/* Top rule */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#b38c2e]/40 to-transparent" />
+
+      <div className="container mx-auto px-6 lg:px-10">
+
+        {/* Header row */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-3">
           <div>
-            <h2 className="text-5xl lg:text-5xl font-bold text-primary leading-tight mb-1">
-              Amenities
-            </h2>
-            <p className="text-gray-500 text-lg mt-3 mb-0 tracking-wide max-w-xl">
-            
-            </p>
+            <div className="section-reveal mb-3">
+              <span className="section-label">What We Offer</span>
+            </div>
+            <div className="section-reveal">
+              <h2
+                className="font-display font-light italic text-[#f5f0e8] leading-none"
+                style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)' }}
+              >
+                Amenities
+              </h2>
+            </div>
           </div>
-          <div className="flex items-center mt-4 md:mt-0 gap-6">
-            <button onClick={handlePrev} disabled={currentIndex === 0}
-              className={`rounded-full p-1 transition ${currentIndex === 0 ? 'opacity-40 cursor-not-allowed' : 'hover:bg-gray-100'}`}>
-              <LeftArrow />
+
+          {/* Navigation buttons */}
+          <div className="section-reveal flex items-center gap-4 mt-6 md:mt-0">
+            <button
+              onClick={handlePrev}
+              disabled={currentIndex === 0}
+              className={`w-11 h-11 flex items-center justify-center border border-[#b38c2e]/50 text-[#e4c152] rounded-full transition-all duration-300 ${
+                currentIndex === 0
+                  ? 'opacity-30 cursor-not-allowed'
+                  : 'hover:bg-[#b38c2e]/20 hover:border-[#e4c152]'
+              }`}
+              aria-label="Previous amenity"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M9 2L4 7l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </button>
-            <button onClick={handleNext} disabled={currentIndex === maxIndex}
-              className={`rounded-full p-1 transition ${currentIndex === maxIndex ? 'opacity-40 cursor-not-allowed' : 'hover:bg-gray-100'}`}>
-              <RightArrow />
+            <span className="font-display italic text-[#b38c2e]/60 text-sm">
+              {String(currentIndex + 1).padStart(2, '0')} / {String(amenities.length).padStart(2, '0')}
+            </span>
+            <button
+              onClick={handleNext}
+              disabled={currentIndex === maxIndex}
+              className={`w-11 h-11 flex items-center justify-center border border-[#b38c2e]/50 text-[#e4c152] rounded-full transition-all duration-300 ${
+                currentIndex === maxIndex
+                  ? 'opacity-30 cursor-not-allowed'
+                  : 'hover:bg-[#b38c2e]/20 hover:border-[#e4c152]'
+              }`}
+              aria-label="Next amenity"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M5 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </button>
           </div>
         </div>
-        <hr className="border-t border-gray-300 mb-8" />
 
-        {/* Cards */}
-        <div className="relative">
+        {/* Gold rule */}
+        <div className="section-reveal mb-10">
+          <div className="gold-rule" />
+        </div>
+
+        {/* Cards Carousel */}
+        <div className="relative overflow-hidden">
           <div
-            className="flex transition-transform duration-500 ease-in-out gap-12"
-            style={{ transform: `translateX(-${currentIndex * 360}px)` }}
+            className="flex gap-7 transition-transform duration-500 ease-in-out"
+            style={{
+              transform: `translateX(-${currentIndex * (320 + 28)}px)`,
+              willChange: 'transform',
+            }}
           >
             {amenities.map((amenity, idx) => (
-              <div key={amenity.key} className="min-w-[320px] max-w-[340px] flex-shrink-0 relative">
-                {/* Fraction + divider (top) */}
-                <div className="flex flex-col items-start mb-5">
-                  <span className="text-sm font-semibold text-gray-500 tracking-widest">{getCardIndexFraction(idx)}</span>
-                  <hr className="w-full border-gray-300 mt-2" />
+              <div
+                key={amenity.key}
+                className="luxury-card min-w-[300px] max-w-[300px] flex-shrink-0 overflow-hidden"
+              >
+                {/* Roman numeral + divider */}
+                <div className="px-6 pt-6 pb-4">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="font-display italic text-[#b38c2e] text-2xl leading-none">
+                      {romanNumeral(idx)}
+                    </span>
+                    <div className="flex-1 h-px bg-[#b38c2e]/20" />
+                  </div>
+                  <h3 className="font-body font-light text-[#f5f0e8] text-sm tracking-[0.18em] uppercase mb-1">
+                    {amenity.title}
+                  </h3>
                 </div>
-
-                {/* Title (now above image like screenshot) */}
-                <h3 className="text-xl md:text-2xl font-normal text-left tracking-wide uppercase text-primary mb-3 max-w-[260px]">
-                  {amenity.title}
-                </h3>
 
                 {/* Image */}
-                <div className="w-full h-[220px] md:h-[260px] rounded-md overflow-hidden">
-                  <img src={amenity.img} alt={amenity.title} className="object-cover w-full h-full" />
+                <div className="w-full h-[220px] overflow-hidden">
+                  <img
+                    src={amenity.img}
+                    alt={amenity.title}
+                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                  />
                 </div>
+
+                {/* Bottom accent */}
+                <div className="h-px bg-gradient-to-r from-[#b38c2e]/60 to-transparent" />
               </div>
             ))}
           </div>
         </div>
+
+        {/* Dot indicators */}
+        <div className="flex justify-center gap-2 mt-8">
+          {amenities.slice(0, amenities.length - ITEMS_VISIBLE + 1).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrentIndex(i)}
+              className={`transition-all duration-300 ${
+                i === currentIndex
+                  ? 'text-[#e4c152] scale-125'
+                  : 'text-[#b38c2e]/40 hover:text-[#b38c2e]'
+              }`}
+              style={{ fontSize: '8px', lineHeight: 1 }}
+              aria-label={`Go to slide ${i + 1}`}
+            >
+              ◆
+            </button>
+          ))}
+        </div>
       </div>
+
+      {/* Bottom rule */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#b38c2e]/40 to-transparent" />
     </section>
   );
 };

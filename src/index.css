@@ -2,111 +2,366 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Updated design system with new navy blue (#014b76) and golden gradient (#b38c2e → #e4c152) */
+/* ============================================================
+   KANJWAL CITY — REFINED NAVY LUXURY DESIGN SYSTEM
+   Brand: Navy #014b76 + Gold #b38c2e → #e4c152
+   Typography: Cormorant Garamond (display) + Jost (body)
+   ============================================================ */
 
 @layer base {
   :root {
     /* Base Colors */
-    --background: 204 98% 23%; /* #014b76 */
-    --foreground: 0 0% 100%;
+    --background: 204 98% 23%;       /* #014b76 navy */
+    --foreground: 40 56% 93%;        /* #f5f0e8 cream */
 
-    --card: 204 98% 23%;
-    --card-foreground: 0 0% 100%;
+    --card: 205 96% 17%;             /* #012d47 deep navy */
+    --card-foreground: 40 56% 93%;
 
-    --popover: 204 98% 23%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 205 96% 17%;
+    --popover-foreground: 40 56% 93%;
 
-    /* Primary (Golden Gradient Base) */
-    --primary: 43 61% 49%;
+    /* Primary — Gold */
+    --primary: 43 61% 49%;           /* #b38c2e gold */
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary (Navy Blue Base) */
+    /* Secondary — Navy */
     --secondary: 204 98% 23%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary-foreground: 40 56% 93%;
 
-    --muted: 204 98% 28%;
-    --muted-foreground: 0 0% 70%;
+    --muted: 205 96% 17%;
+    --muted-foreground: 200 30% 65%; /* #9bb8c4 */
 
-    /* Accent and Border */
     --accent: 43 61% 49%;
     --accent-foreground: 0 0% 100%;
-    --border: 204 98% 28%;
-    --input: 204 98% 26%;
+    --border: 205 60% 25%;
+    --input: 205 96% 17%;
     --ring: 43 61% 49%;
 
     --radius: 0.5rem;
 
-    /* Custom Kunjwal Colors */
-    --kunjwal-gold-dark: 43 36% 45%; /* #b38c2e */
-    --kunjwal-gold-light: 46 67% 56%; /* #e4c152 */
-    --kunjwal-black: 204 98% 23%; /* replaced black with navy blue */
-    --kunjwal-navy: 204 98% 23%;
-    --kunjwal-navy-light: 204 98% 30%;
+    /* Brand Tokens */
+    --gold: #b38c2e;
+    --gold-light: #e4c152;
+    --navy: #014b76;
+    --navy-deep: #012d47;
+    --cream: #f5f0e8;
+    --cream-muted: #9bb8c4;
+
+    /* Fonts */
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'Jost', system-ui, sans-serif;
 
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, #b38c2e, #e4c152);
-    --gradient-hero: linear-gradient(180deg, #b38c2e, #e4c152);
+    --gradient-gold: linear-gradient(135deg, #b38c2e, #e4c152);
+    --gradient-gold-shimmer: linear-gradient(90deg, #b38c2e 0%, #e4c152 40%, #b38c2e 60%, #e4c152 100%);
 
     /* Shadows */
     --shadow-gold: 0 10px 30px rgba(179, 140, 46, 0.3);
-    --shadow-soft: 0 4px 20px rgba(1, 75, 118, 0.5);
+    --shadow-luxury: 0 0 40px rgba(179, 140, 46, 0.25);
+    --shadow-card: 0 20px 60px rgba(0, 0, 0, 0.4);
 
     /* Sidebar */
     --sidebar-background: 204 98% 23%;
-    --sidebar-foreground: 0 0% 100%;
+    --sidebar-foreground: 40 56% 93%;
     --sidebar-primary: 43 61% 49%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 204 98% 30%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 204 98% 28%;
+    --sidebar-accent: 205 96% 17%;
+    --sidebar-accent-foreground: 40 56% 93%;
+    --sidebar-border: 205 60% 25%;
     --sidebar-ring: 43 61% 49%;
   }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
 }
+
+/* ============================================================
+   BASE STYLES
+   ============================================================ */
 
 @layer base {
   * {
     @apply border-border;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+    background-color: var(--navy);
+    color: var(--cream);
+    letter-spacing: 0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    letter-spacing: 0.02em;
   }
 }
-/* ========================================
-   HERO CAROUSEL - FINAL FIX
-   ======================================== */
 
-/* Force carousel container height */
+/* ============================================================
+   ANIMATION KEYFRAMES
+   ============================================================ */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes goldShimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes scaleXIn {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 20px rgba(179, 140, 46, 0.3); }
+  50%       { box-shadow: 0 0 40px rgba(228, 193, 82, 0.5); }
+}
+
+/* ============================================================
+   REUSABLE LUXURY COMPONENTS
+   ============================================================ */
+
+@layer components {
+
+  /* --- Section reveal (JS adds .revealed class via IntersectionObserver) --- */
+  .section-reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.75s ease-out, transform 0.75s ease-out;
+  }
+  .section-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .section-reveal-left {
+    opacity: 0;
+    transform: translateX(-36px);
+    transition: opacity 0.75s ease-out, transform 0.75s ease-out;
+  }
+  .section-reveal-left.revealed {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .section-reveal-right {
+    opacity: 0;
+    transform: translateX(36px);
+    transition: opacity 0.75s ease-out, transform 0.75s ease-out;
+  }
+  .section-reveal-right.revealed {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* --- Gold ornamental divider --- */
+  .gold-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+  }
+  .gold-divider::before,
+  .gold-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #b38c2e, transparent);
+  }
+  .gold-divider-diamond::before {
+    content: '◆';
+    color: #b38c2e;
+    font-size: 10px;
+    flex: none;
+  }
+
+  /* --- Thin gold horizontal rule --- */
+  .gold-rule {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #b38c2e 30%, #e4c152 70%, transparent);
+    margin: 0;
+  }
+
+  /* --- Gold accent line (short, centered) --- */
+  .gold-accent-line {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, #b38c2e, #e4c152);
+    border-radius: 1px;
+  }
+
+  /* --- Luxury CTA button (gold outlined) --- */
+  .luxury-btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 40px;
+    border: 1.5px solid #b38c2e;
+    color: #e4c152;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+  .luxury-btn-outline::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #b38c2e, #e4c152);
+    transform: translateX(-101%);
+    transition: transform 0.35s ease;
+  }
+  .luxury-btn-outline:hover::before {
+    transform: translateX(0);
+  }
+  .luxury-btn-outline:hover {
+    color: #fff;
+    border-color: #e4c152;
+  }
+  .luxury-btn-outline span {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* --- Luxury CTA button (gold filled) --- */
+  .luxury-btn-gold {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 40px;
+    background: linear-gradient(135deg, #b38c2e, #e4c152);
+    background-size: 200% auto;
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: background-position 0.4s ease, box-shadow 0.3s ease;
+  }
+  .luxury-btn-gold:hover {
+    background-position: right center;
+    box-shadow: 0 8px 30px rgba(179, 140, 46, 0.5);
+  }
+
+  /* --- Section label (small gold uppercase tag) --- */
+  .section-label {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #b38c2e;
+    margin-bottom: 1rem;
+  }
+
+  /* --- Gold gradient text --- */
+  .gold-text {
+    background: linear-gradient(135deg, #b38c2e, #e4c152);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* --- Display heading (Cormorant) --- */
+  .display-heading {
+    font-family: var(--font-display);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+  }
+
+  /* --- Feature stat block --- */
+  .feature-block {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 20px;
+    border-left: 3px solid #b38c2e;
+    background: rgba(1, 45, 71, 0.4);
+    transition: border-color 0.3s ease, background 0.3s ease;
+  }
+  .feature-block:hover {
+    border-color: #e4c152;
+    background: rgba(1, 45, 71, 0.7);
+  }
+
+  /* --- Luxury card (dark navy with gold top border) --- */
+  .luxury-card {
+    background: #012d47;
+    border-top: 2px solid #b38c2e;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .luxury-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 40px rgba(179, 140, 46, 0.2), 0 20px 60px rgba(0, 0, 0, 0.4);
+    border-color: #e4c152;
+  }
+
+  /* --- Gold shimmer background text --- */
+  .gold-shimmer-text {
+    background: linear-gradient(90deg, #b38c2e 0%, #e4c152 40%, #b38c2e 80%, #e4c152 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: goldShimmer 4s linear infinite;
+  }
+}
+
+/* ============================================================
+   CAROUSEL OVERRIDES (react-slick)
+   ============================================================ */
+
 .slick-slider,
 .slick-list,
 .slick-track {
@@ -121,28 +376,52 @@
   height: inherit !important;
 }
 
-/* Hide overflow */
 .slick-slider {
   overflow: hidden !important;
 }
 
-/* Mobile arrows adjustment */
+/* Custom dots — gold diamonds */
+.slick-dots li button:before {
+  content: '◆';
+  color: rgba(179, 140, 46, 0.4);
+  font-size: 8px;
+  line-height: 20px;
+  transition: color 0.3s ease;
+}
+.slick-dots li.slick-active button:before {
+  color: #e4c152;
+}
+
 @media (max-width: 767px) {
   .slick-prev,
   .slick-next {
     width: 40px !important;
     height: 40px !important;
   }
-  
-  .slick-prev {
-    left: 10px !important;
-  }
-  
-  .slick-next {
-    right: 10px !important;
-  }
-  
-  .slick-dots {
-    bottom: 15px !important;
-  }
+  .slick-prev { left: 10px !important; }
+  .slick-next { right: 10px !important; }
+  .slick-dots { bottom: 15px !important; }
+}
+
+/* ============================================================
+   FORM INPUT OVERRIDES
+   ============================================================ */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #012d47 inset !important;
+  -webkit-text-fill-color: #f5f0e8 !important;
+  caret-color: #e4c152;
+}
+
+/* ============================================================
+   SCROLL TO TOP / WHATSAPP POSITIONING
+   ============================================================ */
+
+.scroll-top-btn {
+  position: fixed;
+  bottom: 96px;  /* above WhatsApp at bottom-8 (64px + 32px gap) */
+  right: 32px;
+  z-index: 40;
 }

@@ -1,44 +1,109 @@
-import React from 'react';
-import { Play } from 'lucide-react';
-import promoVideo from '@/assets/video.mp4'; // <-- import your video here
+import React, { useEffect, useRef } from 'react';
+import promoVideo from '@/assets/video.mp4';
 
 const VideoSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.querySelectorAll('.section-reveal').forEach((el, i) => {
+              setTimeout(() => el.classList.add('revealed'), i * 120);
+            });
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="video" className="py-20 bg-white scroll-mt-24">
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="max-w-5xl mx-auto">
-          {/* Video Container */}
-          <div className="relative aspect-video bg-black rounded-lg overflow-hidden shadow-soft">
-            <video 
-              src={promoVideo} 
-              autoPlay 
-              loop 
-              muted 
-              playsInline
-              className="w-full h-full object-cover"
-            />
+    <section
+      id="video"
+      ref={sectionRef}
+      className="relative py-24 lg:py-32 bg-[#012d47] overflow-hidden scroll-mt-20"
+    >
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#b38c2e]/30 to-transparent" />
 
-            {/* Logo Overlay */}
-            <div className="absolute top-6 left-6 flex items-center space-x-2">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <svg className="w-5 h-5 text-primary-foreground" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-                </svg>
-              </div>
-              <div>
-                <p className="text-primary font-bold text-sm">KUNJWAL</p>
-                <p className="text-primary text-xs">CITY</p>
-              </div>
+      <div className="container mx-auto px-6 lg:px-10">
+
+        {/* Heading */}
+        <div className="text-center mb-14">
+          <div className="section-reveal mb-3">
+            <span className="section-label">See It Live</span>
+          </div>
+          <div className="section-reveal">
+            <h2
+              className="font-display font-light italic text-[#f5f0e8] leading-tight"
+              style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)' }}
+            >
+              Experience Kanjwal City
+            </h2>
+          </div>
+          <div className="section-reveal flex justify-center mt-5">
+            <div className="gold-accent-line" />
+          </div>
+          <div className="section-reveal mt-4">
+            <p className="font-body font-light text-[#f5f0e8]/55 text-sm tracking-[0.12em]">
+              A masterplanned community in the heart of Gujrat, Punjab
+            </p>
+          </div>
+        </div>
+
+        {/* Video Frame */}
+        <div className="section-reveal max-w-5xl mx-auto relative">
+          {/* Outer gold frame */}
+          <div className="relative p-3"
+            style={{
+              background: 'linear-gradient(135deg, rgba(179,140,46,0.25), rgba(228,193,82,0.08), rgba(179,140,46,0.25))',
+            }}
+          >
+            {/* Corner ornaments */}
+            <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-[#b38c2e]" />
+            <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-[#b38c2e]" />
+            <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-[#b38c2e]" />
+            <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-[#b38c2e]" />
+
+            {/* Video */}
+            <div className="relative aspect-video overflow-hidden bg-[#012d47]">
+              <video
+                src={promoVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+              />
+              {/* Subtle vignette */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: 'radial-gradient(ellipse at center, transparent 60%, rgba(1,45,71,0.4) 100%)'
+                }}
+              />
             </div>
+          </div>
 
-            {/* Title Overlay */}
-            
-
-            {/* YouTube Actions */}
-           
+          {/* Bottom label */}
+          <div className="flex items-center justify-between mt-5 px-1">
+            <div className="flex items-center gap-3">
+              <div className="w-2 h-2 rounded-full bg-[#e4c152] animate-pulse" />
+              <span className="font-body text-[10px] tracking-[0.25em] uppercase text-[#b38c2e]">
+                Live Preview
+              </span>
+            </div>
+            <span className="font-display italic text-[#f5f0e8]/40 text-sm">
+              Kanjwal City · Gujrat 2025
+            </span>
           </div>
         </div>
       </div>
+
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#b38c2e]/30 to-transparent" />
     </section>
   );
 };
