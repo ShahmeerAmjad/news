@@ -50,11 +50,11 @@ const Header = () => {
           <button
             onClick={() => handleNavClick('top')}
             className="flex items-center flex-shrink-0 group"
-            aria-label="Kanjwal City — Home"
+            aria-label="Kunjwal City — Home"
           >
             <img
               src={logo}
-              alt="Kanjwal City"
+              alt="Kunjwal City"
               className="w-24 h-24 md:w-28 md:h-28 object-contain transition-opacity duration-300 group-hover:opacity-85"
             />
           </button>
@@ -106,7 +106,7 @@ const Header = () => {
           <div className="mobile-menu flex flex-col items-center justify-center h-full gap-2">
             {/* Gold ornament */}
             <div className="mb-8 text-[#b38c2e] text-xs tracking-[0.3em] uppercase font-body">
-              Kanjwal City
+              Kunjwal City
             </div>
 
             {NAV_ITEMS.map((item, idx) => (

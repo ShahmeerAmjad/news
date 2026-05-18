@@ -33,7 +33,7 @@ const Footer = () => {
               <button onClick={scrollToTop} className="block">
                 <img
                   src={logo}
-                  alt="Kanjwal City"
+                  alt="Kunjwal City"
                   className="h-20 md:h-24 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity"
                 />
               </button>
@@ -43,20 +43,20 @@ const Footer = () => {
               </p>
 
               <p className="font-body font-light text-[#9bb8c4] text-sm leading-7 max-w-xs">
-                Kanjwal City offers premium residential plots in Gujrat with modern amenities
+                Kunjwal City offers premium residential plots in Gujrat with modern amenities
                 and transparent dealing by AYS Developers.
               </p>
 
               {/* Document buttons */}
               <div className="flex flex-wrap gap-3 pt-2">
                 <button
-                  onClick={() => downloadFile(paymentPdf, 'kanjwal-city-payment-plan.pdf')}
+                  onClick={() => downloadFile(paymentPdf, 'kunjwal-city-payment-plan.pdf')}
                   className="luxury-btn-outline !py-2.5 !px-5 !text-[10px]"
                 >
                   <span>Payment Plan</span>
                 </button>
                 <button
-                  onClick={() => downloadFile(mapPdf, 'kanjwal-city-map.pdf')}
+                  onClick={() => downloadFile(mapPdf, 'kunjwal-city-map.pdf')}
                   className="luxury-btn-outline !py-2.5 !px-5 !text-[10px]"
                 >
                   <span>Site Map</span>
@@ -105,10 +105,10 @@ const Footer = () => {
                   <div>
                     <div className="font-body text-[9px] tracking-[0.22em] uppercase text-[#b38c2e] mb-1">Email</div>
                     <a
-                      href="mailto:info@kanjwalcity.pk"
+                      href="mailto:info@kunjwalcity.pk"
                       className="font-body font-light text-[#9bb8c4] text-sm hover:text-[#e4c152] transition-colors"
                     >
-                      info@kanjwalcity.pk
+                      info@kunjwalcity.pk
                     </a>
                   </div>
                 </div>
@@ -139,7 +139,7 @@ const Footer = () => {
                   >
                     <img
                       src={mapThumb}
-                      alt="Kanjwal City Location"
+                      alt="Kunjwal City Location"
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-[#012d47]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -186,7 +186,7 @@ const Footer = () => {
         <div className="border-t border-[#b38c2e]/15">
           <div className="container mx-auto px-6 lg:px-10 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="font-body text-[9px] tracking-[0.2em] uppercase text-[#9bb8c4]/50">
-              © {new Date().getFullYear()} Kanjwal City · AYS Developers (Pvt.) Ltd. · All Rights Reserved
+              © {new Date().getFullYear()} Kunjwal City · AYS Developers (Pvt.) Ltd. · All Rights Reserved
             </p>
             <p className="font-body text-[9px] tracking-[0.15em] uppercase text-[#9bb8c4]/35">
               Gujrat · Punjab · Pakistan

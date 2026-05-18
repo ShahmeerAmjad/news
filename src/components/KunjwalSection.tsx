@@ -64,7 +64,7 @@ const KunjwalSection = () => {
                 className="font-display font-light italic text-[#f5f0e8] leading-tight"
                 style={{ fontSize: 'clamp(2.8rem, 5.5vw, 5rem)' }}
               >
-                Kanjwal City
+                Kunjwal City
                 <span className="block text-[#e4c152]">Gujrat</span>
               </h2>
             </div>
@@ -124,7 +124,7 @@ const KunjwalSection = () => {
               <div className="overflow-hidden group">
                 <img
                   src={kunjwalImage}
-                  alt="Kanjwal City Gujrat"
+                  alt="Kunjwal City Gujrat"
                   className="w-full h-[420px] lg:h-[520px] object-cover transform transition-transform duration-700 group-hover:scale-105"
                 />
                 {/* Gold overlay on hover */}

@@ -80,7 +80,7 @@ const AboutSection = () => {
         {/* Body Text */}
         <div className="space-y-7 text-[#f5f0e8]/85 text-lg leading-8 font-body font-light max-w-3xl mx-auto">
           <p className="section-reveal">
-            Kanjwal City, Gujrat is proudly developed by{" "}
+            Kunjwal City, Gujrat is proudly developed by{" "}
             <span className="text-[#e4c152] font-medium">AYS Developers (Pvt.) Ltd.</span>{" "}
             — a trusted name in the Pakistani real estate sector. With an unwavering commitment
             to quality, integrity, and long-term value, AYS Developers continue to set new
@@ -96,7 +96,7 @@ const AboutSection = () => {
 
           <p className="section-reveal">
             With a proven track record of delivering sustainable and well-planned communities,
-            AYS Developers position Kanjwal City not just as a place to live —
+            AYS Developers position Kunjwal City not just as a place to live —
             <em className="text-[#e4c152] not-italic"> but a place to thrive.</em>
           </p>
         </div>

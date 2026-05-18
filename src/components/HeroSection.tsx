@@ -51,9 +51,9 @@ const SlideContent: React.FC<SlideContentProps> = ({ slideIndex }) => {
 
   const textImages = [text_slide1, text_slide2, text_slide3];
   const alts = [
-    "5, 7 & 10 Marla Plots — Kanjwal City",
-    "Own Your Dream Home — Kanjwal City",
-    "Kids Play Areas — Kanjwal City",
+    "5, 7 & 10 Marla Plots — Kunjwal City",
+    "Own Your Dream Home — Kunjwal City",
+    "Kids Play Areas — Kunjwal City",
   ];
 
   return (
@@ -77,7 +77,7 @@ const SlideContent: React.FC<SlideContentProps> = ({ slideIndex }) => {
         <div className="flex items-center gap-3 mt-2">
           <div className="w-12 h-px bg-[#b38c2e]/60" />
           <span className="text-[#e4c152]/70 text-[10px] tracking-[0.3em] uppercase font-body font-light">
-            Kanjwal City · Gujrat, Punjab
+            Kunjwal City · Gujrat, Punjab
           </span>
           <div className="w-12 h-px bg-[#b38c2e]/60" />
         </div>
@@ -130,9 +130,9 @@ const HeroSection: React.FC = () => {
   };
 
   const slides = [
-    { src: hero_slide1, alt: "Residential Plots — Kanjwal City Gujrat" },
-    { src: hero_slide2, alt: "Modern Dream Homes — Kanjwal City" },
-    { src: hero_slide3, alt: "Kids Play Areas — Kanjwal City" },
+    { src: hero_slide1, alt: "Residential Plots — Kunjwal City Gujrat" },
+    { src: hero_slide2, alt: "Modern Dream Homes — Kunjwal City" },
+    { src: hero_slide3, alt: "Kids Play Areas — Kunjwal City" },
   ];
 
   return (

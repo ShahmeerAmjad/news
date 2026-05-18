@@ -41,7 +41,7 @@ const VideoSection = () => {
               className="font-display font-light italic text-[#f5f0e8] leading-tight"
               style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)' }}
             >
-              Experience Kanjwal City
+              Experience Kunjwal City
             </h2>
           </div>
           <div className="section-reveal flex justify-center mt-5">
@@ -97,7 +97,7 @@ const VideoSection = () => {
               </span>
             </div>
             <span className="font-display italic text-[#f5f0e8]/40 text-sm">
-              Kanjwal City · Gujrat 2025
+              Kunjwal City · Gujrat 2025
             </span>
           </div>
         </div>
