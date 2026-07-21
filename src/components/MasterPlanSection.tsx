@@ -7,21 +7,19 @@ import { ScrubMedia } from "@/components/lux/ScrubMedia";
 import { DepthLayer } from "@/components/lux/DepthLayer";
 import { SplitText } from "@/components/lux/SplitText";
 
-// label + position (% of plan image) + progress threshold at which the marker ignites.
-// x/y are visual starting values tuned against /media/master-plan.png in Step 4.
-const MARKERS: { label: string; x: number; y: number; at: number }[] = [
-  { label: "Grand Jamia Mosque", x: 50, y: 30, at: 0.30 },
-  { label: "80-ft Main Boulevard", x: 50, y: 52, at: 0.34 },
-  { label: "Central Park — 10.4 Kanal", x: 42, y: 46, at: 0.38 },
-  { label: "Community Center", x: 60, y: 44, at: 0.42 },
-  { label: "School & Hospital", x: 34, y: 62, at: 0.46 },
-  { label: "Sports Complex", x: 66, y: 62, at: 0.50 },
-  { label: "Commercial Zone", x: 50, y: 74, at: 0.54 },
-  { label: "Kids Play Area", x: 40, y: 36, at: 0.58 },
-  { label: "24/7 Security & CCTV", x: 62, y: 30, at: 0.62 },
+// Facility label + the scroll progress at which its legend chip ignites (dim → gold),
+// in sequence, synced with the plan drawing in on the right.
+const FACILITIES: { label: string; at: number }[] = [
+  { label: "Grand Jamia Mosque", at: 0.30 },
+  { label: "80-ft Main Boulevard", at: 0.34 },
+  { label: "Central Park — 10.4 Kanal", at: 0.38 },
+  { label: "Community Center", at: 0.42 },
+  { label: "School & Hospital", at: 0.46 },
+  { label: "Sports Complex", at: 0.50 },
+  { label: "Commercial Zone", at: 0.54 },
+  { label: "Kids Play Area", at: 0.58 },
+  { label: "24/7 Security & CCTV", at: 0.62 },
 ];
-
-const FACILITIES = MARKERS.map((m) => m.label);
 
 const downloadMap = () => {
   track("ViewContent", { content_name: "Master Plan PDF" });
@@ -35,19 +33,21 @@ const downloadMap = () => {
   document.body.removeChild(a);
 };
 
-function Marker({ label, x, y, at }: { label: string; x: number; y: number; at: number }) {
+/** A facility legend row that illuminates (dim → full, dot glows) as the scene scrubs past `at`. */
+function FacilityChip({ label, at }: { label: string; at: number }) {
   const { progress, reduced } = useScene();
-  const opacity = useTransform(progress, [at, at + 0.03], [0, 1]);
-  const scale = useTransform(progress, [at, at + 0.03], [0.4, 1]);
+  const opacity = useTransform(progress, [at - 0.03, at + 0.03], [0.28, 1]);
+  const dotScale = useTransform(progress, [at - 0.03, at + 0.03], [0.5, 1]);
   return (
     <motion.div
-      className="absolute z-20 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2"
-      style={{ left: `${x}%`, top: `${y}%`, opacity: reduced ? 1 : opacity, scale: reduced ? 1 : scale }}
+      className="flex items-center gap-2 text-sm text-ivory"
+      style={{ opacity: reduced ? 1 : opacity }}
     >
-      <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-gradient-gold shadow-[0_0_12px_2px_rgba(228,193,82,0.6)]" />
-      <span className="whitespace-nowrap rounded-sm bg-navy-950/70 px-2 py-1 text-[0.6rem] font-medium uppercase tracking-[0.15em] text-gold-200 backdrop-blur-sm">
-        {label}
-      </span>
+      <motion.span
+        className="h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-gold shadow-[0_0_10px_1px_rgba(228,193,82,0.55)]"
+        style={{ scale: reduced ? 1 : dotScale }}
+      />
+      {label}
     </motion.div>
   );
 }
@@ -86,10 +86,7 @@ const MasterPlanSection = () => {
 
               <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-3">
                 {FACILITIES.map((f) => (
-                  <div key={f} className="flex items-center gap-2 text-sm text-ivory/75">
-                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-gold" />
-                    {f}
-                  </div>
+                  <FacilityChip key={f.label} label={f.label} at={f.at} />
                 ))}
               </div>
 
@@ -108,7 +105,7 @@ const MasterPlanSection = () => {
               </div>
             </div>
 
-            {/* Master plan render + igniting markers */}
+            {/* Master plan render — draws in as the scene scrubs */}
             <div className="relative">
               <button
                 onClick={downloadMap}
@@ -122,9 +119,6 @@ const MasterPlanSection = () => {
                   className="mx-auto max-h-[68vh] w-auto"
                   imgClassName="mx-auto max-h-[68vh] w-auto object-contain transition-transform duration-700 group-hover:scale-[1.03]"
                 />
-                {MARKERS.map((m) => (
-                  <Marker key={m.label} {...m} />
-                ))}
                 <span className="block bg-navy-950/60 py-3 text-center text-[0.65rem] uppercase tracking-[0.25em] text-gold-200">
                   Tap to open full plan (PDF)
                 </span>
