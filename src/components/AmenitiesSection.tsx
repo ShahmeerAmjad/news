@@ -1,98 +1,215 @@
-import React, { useRef, useState } from 'react';
+import React from "react";
+import {
+  Shield,
+  Trees,
+  Baby,
+  Landmark,
+  GraduationCap,
+  Stethoscope,
+  Users,
+  Dumbbell,
+  Store,
+  Route,
+  Cable,
+  Fence,
+  Leaf,
+} from "lucide-react";
+import { Reveal, RevealGroup } from "@/components/lux/Reveal";
+import { Parallax } from "@/components/lux/Parallax";
 
 import gated from "@/assets/IMG-20250920-WA0010.jpg";
-import Mosque from "@/assets/IMG-20250920-WA0012.jpg";
+import mosque from "@/assets/IMG-20250920-WA0012.jpg";
 import play from "@/assets/IMG-20250920-WA0018.jpg";
-
 import security from "@/assets/closed-circuit-security-cameras.jpg";
 import park from "@/assets/images.jpg";
 
-const amenities = [
-  { title: 'Gated Community', img: gated, key: 'gated-community' },
-  { title: 'Grand Mosque', img: Mosque, key: 'grand-mosque' },
-  { title: 'Kids Play Area', img: play, key: 'kids-play-area' },
-  { title: '24/7 Security', img: security, key: 'security' },
-  { title: 'Park', img: park, key: 'park' },
+type PhotoCard = {
+  title: string;
+  desc: string;
+  img: string;
+  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+};
+
+type IconCard = {
+  title: string;
+  desc: string;
+  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+};
+
+const PHOTO_CARDS: PhotoCard[] = [
+  {
+    title: "Grand Jamia Mosque",
+    desc: "A 1.7-Kanal central mosque at the spiritual heart of the community.",
+    img: mosque,
+    icon: Landmark,
+  },
+  {
+    title: "Gated Community",
+    desc: "A single secured entrance across 200+ Kanals of private living.",
+    img: gated,
+    icon: Fence,
+  },
+  {
+    title: "Kids Play Area",
+    desc: "Safe, dedicated play spaces for the youngest residents.",
+    img: play,
+    icon: Baby,
+  },
+  {
+    title: "24/7 Security & CCTV",
+    desc: "Round-the-clock guards and surveillance on every avenue.",
+    img: security,
+    icon: Shield,
+  },
+  {
+    title: "Landscaped Parks",
+    desc: "Manicured greens and open lawns woven through the master plan.",
+    img: park,
+    icon: Trees,
+  },
 ];
 
-const LeftArrow = () => (
-  <svg width="36" height="36" fill="none" viewBox="0 0 36 36">
-    <path d="M24 30L12 18L24 6" stroke="#88B613" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const RightArrow = () => (
-  <svg width="36" height="36" fill="none" viewBox="0 0 36 36">
-    <path d="M12 6L24 18L12 30" stroke="#88B613" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const ITEMS_VISIBLE = 3;
+const ICON_CARDS: IconCard[] = [
+  {
+    title: "School",
+    desc: "On-site education so learning stays close to home.",
+    icon: GraduationCap,
+  },
+  {
+    title: "Hospital",
+    desc: "Quality healthcare within the gates for total peace of mind.",
+    icon: Stethoscope,
+  },
+  {
+    title: "Community Center",
+    desc: "A dedicated 4-Kanal hub for gatherings and events.",
+    icon: Users,
+  },
+  {
+    title: "Sports Complex",
+    desc: "Modern courts and facilities for an active lifestyle.",
+    icon: Dumbbell,
+  },
+  {
+    title: "Commercial Zone",
+    desc: "Shopping and business districts a short walk away.",
+    icon: Store,
+  },
+  {
+    title: "80-ft Main Boulevard",
+    desc: "A grand carpeted spine feeding 50-ft and 30-ft roads.",
+    icon: Route,
+  },
+  {
+    title: "Underground Utilities",
+    desc: "Power, water and services routed cleanly below ground.",
+    icon: Cable,
+  },
+  {
+    title: "Central Park",
+    desc: "An expansive 10.4-Kanal green at the core of the plan.",
+    icon: Leaf,
+  },
+];
 
 const AmenitiesSection = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const maxIndex = amenities.length - ITEMS_VISIBLE;
-
-  const handlePrev = () => setCurrentIndex(prev => Math.max(prev - 1, 0));
-  const handleNext = () => setCurrentIndex(prev => Math.min(prev + 1, maxIndex));
-
-  const getCardIndexFraction = (idx) => {
-    return `${String(idx + 1).padStart(2, '0')}/${String(amenities.length).padStart(2, '0')}`;
-  };
-
   return (
-    <section id="amenities" className="py-16 bg-[#F9F9F9] relative overflow-hidden scroll-mt-24">
-      <div className="container mx-auto px-4 lg:px-8">
+    <section
+      id="amenities"
+      className="grain scroll-mt-24 relative overflow-hidden bg-navy-900 py-24 md:py-32"
+    >
+      {/* Ambient depth */}
+      <div className="pointer-events-none absolute inset-0 bg-navy-radial opacity-60" />
+      <div className="pointer-events-none absolute -left-24 top-1/3 h-72 w-72 rounded-full bg-gold/10 blur-[120px]" />
+
+      <div className="lux-container relative">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-2">
-          <div>
-            <h2 className="text-5xl lg:text-5xl font-bold text-primary leading-tight mb-1">
-              Amenities
+        <div className="max-w-2xl">
+          <Reveal>
+            <p className="lux-eyebrow mb-6">Lifestyle &amp; Facilities</p>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <h2 className="font-display text-4xl font-medium leading-[1.05] tracking-tight text-ivory md:text-6xl">
+              Everything,{" "}
+              <span className="italic text-gold-foil">within the gates.</span>
             </h2>
-            <p className="text-gray-500 text-lg mt-3 mb-0 tracking-wide max-w-xl">
-            
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-ivory/70 md:text-lg">
+              From the Grand Jamia Mosque to a 10.4-Kanal central park, every
+              facility in the master plan is designed around comfort, security
+              and the way you want to live.
             </p>
-          </div>
-          <div className="flex items-center mt-4 md:mt-0 gap-6">
-            <button onClick={handlePrev} disabled={currentIndex === 0}
-              className={`rounded-full p-1 transition ${currentIndex === 0 ? 'opacity-40 cursor-not-allowed' : 'hover:bg-gray-100'}`}>
-              <LeftArrow />
-            </button>
-            <button onClick={handleNext} disabled={currentIndex === maxIndex}
-              className={`rounded-full p-1 transition ${currentIndex === maxIndex ? 'opacity-40 cursor-not-allowed' : 'hover:bg-gray-100'}`}>
-              <RightArrow />
-            </button>
-          </div>
+          </Reveal>
         </div>
-        <hr className="border-t border-gray-300 mb-8" />
 
-        {/* Cards */}
-        <div className="relative">
-          <div
-            className="flex transition-transform duration-500 ease-in-out gap-12"
-            style={{ transform: `translateX(-${currentIndex * 360}px)` }}
-          >
-            {amenities.map((amenity, idx) => (
-              <div key={amenity.key} className="min-w-[320px] max-w-[340px] flex-shrink-0 relative">
-                {/* Fraction + divider (top) */}
-                <div className="flex flex-col items-start mb-5">
-                  <span className="text-sm font-semibold text-gray-500 tracking-widest">{getCardIndexFraction(idx)}</span>
-                  <hr className="w-full border-gray-300 mt-2" />
-                </div>
+        <Reveal delay={0.15}>
+          <div className="lux-rule mt-12 mb-12" />
+        </Reveal>
 
-                {/* Title (now above image like screenshot) */}
-                <h3 className="text-xl md:text-2xl font-normal text-left tracking-wide uppercase text-primary mb-3 max-w-[260px]">
-                  {amenity.title}
-                </h3>
+        {/* Photo cards */}
+        <RevealGroup className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
+          {PHOTO_CARDS.map((card) => {
+            const Icon = card.icon;
+            return (
+              <Reveal key={card.title} className="h-full">
+                <article className="group h-full overflow-hidden rounded-sm border border-gold/15 bg-navy-950/40 transition-all duration-500 hover:-translate-y-1.5 hover:border-gold/40 hover:shadow-[0_30px_60px_-30px_rgba(1,34,58,0.9)]">
+                  {/* Image — subtle scroll parallax within the frame for depth */}
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <Parallax speed={0.14} className="h-full w-full">
+                      <img
+                        src={card.img}
+                        alt={card.title}
+                        loading="lazy"
+                        className="h-full w-full scale-110 object-cover transition-transform duration-[900ms] ease-out group-hover:scale-125"
+                      />
+                    </Parallax>
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy-950/85 via-navy-950/10 to-transparent" />
+                    <div className="absolute left-4 top-4 flex h-9 w-9 items-center justify-center rounded-full border border-gold/30 bg-navy-950/50 backdrop-blur-sm">
+                      <Icon className="h-4 w-4 text-gold-200" strokeWidth={1.5} />
+                    </div>
+                  </div>
+                  {/* Body */}
+                  <div className="p-5">
+                    <h3 className="font-display text-xl text-ivory md:text-2xl">
+                      {card.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-ivory/60">
+                      {card.desc}
+                    </p>
+                  </div>
+                </article>
+              </Reveal>
+            );
+          })}
+        </RevealGroup>
 
-                {/* Image */}
-                <div className="w-full h-[220px] md:h-[260px] rounded-md overflow-hidden">
-                  <img src={amenity.img} alt={amenity.title} className="object-cover w-full h-full" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* Icon cards */}
+        <RevealGroup className="mt-4 grid grid-cols-2 gap-4 md:mt-6 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
+          {ICON_CARDS.map((card) => {
+            const Icon = card.icon;
+            return (
+              <Reveal key={card.title} className="h-full">
+                <article className="lux-glass group flex h-full flex-col justify-between rounded-sm p-6 transition-all duration-500 hover:-translate-y-1.5 hover:border-gold/40">
+                  <div className="mb-8 flex h-14 w-14 items-center justify-center rounded-full border border-gold/25 bg-gradient-to-br from-gold/15 to-transparent transition-colors duration-500 group-hover:border-gold/50">
+                    <Icon
+                      className="h-6 w-6 text-gold-200 transition-transform duration-500 group-hover:scale-110"
+                      strokeWidth={1.4}
+                    />
+                  </div>
+                  <div>
+                    <h3 className="font-display text-xl text-ivory md:text-2xl">
+                      {card.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-ivory/60">
+                      {card.desc}
+                    </p>
+                  </div>
+                </article>
+              </Reveal>
+            );
+          })}
+        </RevealGroup>
       </div>
     </section>
   );
