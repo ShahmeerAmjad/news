@@ -23,7 +23,6 @@ export function SplitText({
   text: string;
   range?: [number, number];
   className?: string;
-  wordClassName?: string;
 }) {
   const { reduced } = useScene();
   const words = text.split(" ");

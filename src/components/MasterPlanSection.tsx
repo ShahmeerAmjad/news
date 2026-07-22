@@ -6,7 +6,7 @@ import { ScrollScene, useScene } from "@/components/lux/ScrollScene";
 import { ScrubMedia } from "@/components/lux/ScrubMedia";
 import { DepthLayer } from "@/components/lux/DepthLayer";
 import { SplitText } from "@/components/lux/SplitText";
-import { Reveal, RevealGroup } from "@/components/lux/Reveal";
+import { Reveal } from "@/components/lux/Reveal";
 
 // Facility label + the scroll progress at which its legend chip ignites (dim → gold),
 // in sequence, synced with the plan drawing in on the right (desktop scene only).
@@ -87,7 +87,7 @@ const MasterPlanSection = () => {
               src="/media/plates/masterplan-bg.jpg"
               alt=""
               aria-hidden="true"
-              className="h-[120%] w-full object-cover opacity-40"
+              className="h-[140%] w-full object-cover opacity-40"
             />
           </DepthLayer>
           <div className="absolute inset-0 bg-gradient-to-b from-navy-950/70 via-navy-950/50 to-navy-950" />
@@ -178,16 +178,18 @@ const MasterPlanSection = () => {
             </button>
           </Reveal>
 
-          <RevealGroup className="mt-8 grid grid-cols-2 gap-x-6 gap-y-3" gap={0.08}>
-            {FACILITIES.map((f) => (
-              <Reveal key={f.label} variant="fadeIn">
+          {/* Per-chip delay gives a real sequential ignite (RevealGroup's stagger
+              doesn't propagate because each Reveal owns its whileInView trigger). */}
+          <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-3">
+            {FACILITIES.map((f, i) => (
+              <Reveal key={f.label} variant="fadeIn" delay={i * 0.08}>
                 <div className="flex items-center gap-2 text-sm text-ivory">
                   <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-gold shadow-[0_0_10px_1px_rgba(228,193,82,0.55)]" />
                   {f.label}
                 </div>
               </Reveal>
             ))}
-          </RevealGroup>
+          </div>
 
           <PlanCtas />
         </div>

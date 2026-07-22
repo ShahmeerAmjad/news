@@ -17,7 +17,8 @@ export function useScene(): SceneCtx {
 /**
  * Pins a full-viewport track while the page scrolls through `height`, and
  * publishes 0→1 progress to descendants via useScene(). Under reduced-motion
- * it renders children in normal flow with no pin and progress frozen at 0.
+ * it renders children in normal flow with no pin; children ignore progress via
+ * their own `reduced` guard, so they stay static.
  */
 export function ScrollScene({
   children,
