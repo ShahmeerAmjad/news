@@ -5,7 +5,7 @@
 /* ============================================================
    KUNJWAL CITY — Luxury design system
    Navy #014b76 + gold #b38c2e→#e4c152, ivory light sections.
-   Display: Cormorant Garamond · Body: Manrope
+   Hero: Cinzel · Display: Cormorant Garamond · Body: Poppins
    ============================================================ */
 
 @layer base {
@@ -98,8 +98,7 @@
 
   body {
     @apply bg-[#012a44] text-[#f8f4ea];
-    font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
-    font-feature-settings: "ss01", "cv01";
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
     overflow-x: hidden;
   }
 
@@ -227,6 +226,20 @@ html.lenis body {
 
   .shimmer-line {
     background: linear-gradient(90deg, transparent, rgba(228, 193, 82, 0.7), transparent);
+  }
+
+  /*
+   * /draw is bilingual: Nastaliq Urdu with Gilroy for the English. Every English
+   * fragment on that page is marked dir="ltr", so scoping off that attribute
+   * keeps the two typefaces apart without a class on each span.
+   */
+  .draw-page [dir="ltr"] {
+    font-family: "Gilroy", "Poppins", ui-sans-serif, sans-serif;
+  }
+
+  /* Nastaliq's descenders need far more room than a Latin face. */
+  .draw-page {
+    line-height: 2.1;
   }
 
   /* Gold-foil text fill — used for the accent word in display headlines. */

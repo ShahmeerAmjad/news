@@ -18,10 +18,26 @@ export default {
         display: ['"Cormorant Garamond"', "ui-serif", "Georgia", "serif"],
         // Trajan-style Roman capitals — hero headline only.
         hero: ['"Cinzel"', '"Cormorant Garamond"', "ui-serif", "Georgia", "serif"],
-        sans: ['"Manrope"', "ui-sans-serif", "system-ui", "sans-serif"],
-        // Urdu faces, loaded on demand by the /draw page only.
-        urdu: ['"Noto Naskh Arabic"', '"Jameel Noori Nastaleeq"', "ui-sans-serif", "sans-serif"],
-        nastaliq: ['"Noto Nastaliq Urdu"', '"Jameel Noori Nastaleeq"', "ui-serif", "serif"],
+        sans: ['"Poppins"', "ui-sans-serif", "system-ui", "sans-serif"],
+        // Urdu is Nastaliq throughout on /draw. Jameel Noori Nastaleeq is a
+        // licensed desktop font, so it is used when the device already has it and
+        // Google's Noto Nastaliq Urdu (also Nastaliq) is the web fallback.
+        urdu: ['"Jameel Noori Nastaleeq"', '"Noto Nastaliq Urdu"', "ui-serif", "serif"],
+        nastaliq: ['"Jameel Noori Nastaleeq"', '"Noto Nastaliq Urdu"', "ui-serif", "serif"],
+        // The /draw headline only. Noori Nastaliq Kasheeda is a licensed desktop
+        // font, so it leads the stack for devices that have it; Gulzar is the
+        // closest free web Nastaliq with the same elongated kasheeda character.
+        kasheeda: [
+          '"Jameel Noori Nastaleeq Kasheeda"',
+          '"Noori Nastaliq Kasheeda"',
+          '"Gulzar"',
+          '"Jameel Noori Nastaleeq"',
+          '"Noto Nastaliq Urdu"',
+          "ui-serif",
+          "serif",
+        ],
+        // Gilroy is a paid font we do not licence; Poppins is the loaded stand-in.
+        gilroy: ['"Gilroy"', '"Poppins"', "ui-sans-serif", "sans-serif"],
       },
       letterSpacing: {
         luxe: "0.35em",
