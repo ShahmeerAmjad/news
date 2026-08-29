@@ -75,7 +75,7 @@ const AboutSection = () => {
           gap={0.12}
         >
           <Reveal className="md:px-8 md:first:pl-0">
-            <div className="font-display text-4xl font-medium text-gold-200 md:text-5xl">
+            <div className="lux-num text-4xl font-semibold text-gold-200 md:text-5xl">
               <Counter value={200} suffix="+" />
             </div>
             <p className="mt-3 text-[0.7rem] uppercase tracking-[0.22em] text-ivory/55">
@@ -84,7 +84,7 @@ const AboutSection = () => {
           </Reveal>
 
           <Reveal className="md:px-8">
-            <div className="font-display text-4xl font-medium text-gold-200 md:text-5xl">
+            <div className="lux-num text-4xl font-semibold text-gold-200 md:text-5xl">
               <Counter value={100} suffix="%" />
             </div>
             <p className="mt-3 text-[0.7rem] uppercase tracking-[0.22em] text-ivory/55">
@@ -93,7 +93,7 @@ const AboutSection = () => {
           </Reveal>
 
           <Reveal className="md:px-8">
-            <div className="font-display text-4xl font-medium text-gold-200 md:text-5xl">
+            <div className="lux-num text-4xl font-semibold text-gold-200 md:text-5xl">
               5·7·10
             </div>
             <p className="mt-3 text-[0.7rem] uppercase tracking-[0.22em] text-ivory/55">
@@ -102,7 +102,7 @@ const AboutSection = () => {
           </Reveal>
 
           <Reveal className="md:px-8">
-            <div className="font-display text-4xl font-medium text-gold-200 md:text-5xl">
+            <div className="lux-num text-4xl font-semibold text-gold-200 md:text-5xl">
               24/7
             </div>
             <p className="mt-3 text-[0.7rem] uppercase tracking-[0.22em] text-ivory/55">

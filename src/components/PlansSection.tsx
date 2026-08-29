@@ -70,7 +70,7 @@ const PlansSection = () => {
                 <p className={`text-[0.62rem] font-semibold uppercase tracking-[0.24em] ${p.popular ? "text-gold-200" : "text-gold-700"}`}>
                   {p.label}
                 </p>
-                <h3 className="mt-2 font-display text-5xl leading-none">{p.size}</h3>
+                <h3 className="mt-2 lux-num text-4xl font-semibold leading-none">{p.size}</h3>
                 <p className={`mt-4 text-sm leading-relaxed ${p.popular ? "text-ivory/70" : "text-navy-900/60"}`}>
                   {p.blurb}
                 </p>

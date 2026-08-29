@@ -74,7 +74,7 @@ const DeveloperSection = () => {
         >
           {STATS.map((s) => (
             <Reveal key={s.label} className="md:px-8 md:first:pl-0">
-              <div className="font-display text-4xl font-medium text-gold-200 md:text-5xl">
+              <div className="lux-num text-4xl font-semibold text-gold-200 md:text-5xl">
                 <Counter value={s.value} suffix={s.suffix} />
               </div>
               <p className="mt-3 text-[0.7rem] uppercase tracking-[0.22em] text-ivory/55">

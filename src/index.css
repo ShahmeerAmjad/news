@@ -127,6 +127,7 @@
   h1, h2, h3, h4 {
     font-family: "Cormorant Garamond", ui-serif, Georgia, serif;
     font-weight: 500;
+    font-variant-numeric: lining-nums;
   }
 }
 
@@ -164,6 +165,19 @@ html.lenis body {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+  }
+
+  /*
+   * Figures. Cormorant defaults to OLD-STYLE numerals — digits sit at
+   * varying heights (the 2 and 0 at x-height, 5 and 7 descending), which
+   * made stats like "5·7·10" and "24/7" read as sloppy. Stat displays now
+   * use Poppins with lining, tabular figures so every digit is the same
+   * height and the same width.
+   */
+  .lux-num {
+    font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+    font-variant-numeric: lining-nums tabular-nums;
+    font-feature-settings: "lnum" 1, "tnum" 1;
   }
 
   /* Thin hairline rule */

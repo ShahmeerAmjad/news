@@ -117,7 +117,7 @@ const HeroSection = () => {
             >
               {STATS.map((s) => (
                 <div key={s.v} className="flex flex-col">
-                  <dt className="font-display text-2xl text-gold-200 md:text-3xl">{s.k}</dt>
+                  <dt className="lux-num text-2xl font-semibold text-gold-200 md:text-3xl">{s.k}</dt>
                   <dd className="text-[0.68rem] uppercase tracking-[0.2em] text-ivory/55">{s.v}</dd>
                 </div>
               ))}

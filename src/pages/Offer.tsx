@@ -222,7 +222,7 @@ const Offer = () => {
             >
               {STATS.map((s) => (
                 <div key={s.label} className="flex flex-col">
-                  <dt className="font-display text-2xl text-gold-200 md:text-3xl">
+                  <dt className="lux-num text-2xl font-semibold text-gold-200 md:text-3xl">
                     <Counter value={s.n} prefix={s.prefix} suffix={s.suffix} />
                   </dt>
                   <dd className="text-[0.66rem] uppercase tracking-[0.2em] text-ivory/55">
@@ -305,7 +305,7 @@ const Offer = () => {
                   <p className={`text-[0.62rem] font-semibold uppercase tracking-[0.24em] ${p.popular ? "text-gold-200" : "text-gold-700"}`}>
                     {p.label}
                   </p>
-                  <h3 className="mt-2 whitespace-nowrap font-display text-5xl leading-none">{p.size}</h3>
+                  <h3 className="mt-2 whitespace-nowrap lux-num text-4xl font-semibold leading-none">{p.size}</h3>
                   <p className={`mt-4 text-sm leading-relaxed ${p.popular ? "text-ivory/70" : "text-navy-900/60"}`}>
                     {p.blurb}
                   </p>

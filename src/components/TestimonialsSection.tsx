@@ -116,7 +116,7 @@ const TestimonialsSection = () => {
             <div className="grid gap-8 sm:grid-cols-3">
               {STATS.map((s) => (
                 <div key={s.label} className="text-center">
-                  <div className="font-display text-4xl font-medium text-gold-700 md:text-5xl">
+                  <div className="lux-num text-4xl font-semibold text-gold-700 md:text-5xl">
                     {s.placeholder ? (
                       <span>
                         {s.placeholder}
