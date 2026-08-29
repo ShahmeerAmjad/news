@@ -57,10 +57,6 @@ const HeroSection = () => {
       <div className="relative z-10 flex flex-1 items-center">
         <div className="lux-container w-full">
           <motion.div variants={stagger(0.14, 0.2)} initial="hidden" animate="show" className="max-w-3xl">
-            <motion.p variants={fadeUp} className="lux-eyebrow mb-7">
-              Kunjwal City · Gujrat
-            </motion.p>
-
             <h1 className="font-hero text-[2.15rem] font-medium leading-[1.08] tracking-[0.02em] text-ivory sm:text-[3.4rem] lg:text-[4.8rem]">
               <span className="flex flex-wrap gap-x-4">
                 {HEADLINE.map((w, i) => (
