@@ -1,0 +1,7 @@
+# Keep CLI deploys lean — none of this is needed to build the site.
+.claude
+.git
+node_modules
+node_modules_old
+dist
+*.log

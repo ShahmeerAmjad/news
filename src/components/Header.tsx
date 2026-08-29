@@ -1,127 +1,139 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { HiMenu, HiX } from 'react-icons/hi';
-import logo from '@/assets/logo.png';
+import { useEffect, useState } from "react";
+import { HiMenu, HiX } from "react-icons/hi";
+import { FiPhone } from "react-icons/fi";
+import { AnimatePresence, motion } from "framer-motion";
+import logo from "@/assets/logo.png";
+
+const NAV = [
+  { label: "Overview", id: "overview" },
+  { label: "Master Plan", id: "master-plan" },
+  { label: "Payment Plan", id: "plans" },
+  { label: "Amenities", id: "amenities" },
+  { label: "Location", id: "location" },
+];
+
+const PHONE = "+92 311 1786602";
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      if (
-        mobileMenuOpen &&
-        !target.closest('.mobile-menu') &&
-        !target.closest('.hamburger-button')
-      ) {
-        setMobileMenuOpen(false);
-      }
-    };
-
-    if (mobileMenuOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [mobileMenuOpen]);
-
-  const handleNavClick = (id: string) => {
-    if (id === 'top') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      setMobileMenuOpen(false);
+  const go = (id: string) => {
+    setOpen(false);
+    if (id === "top") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    setMobileMenuOpen(false);
-  };
-
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+    <motion.header
+      initial={{ y: -40, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
         scrolled
-          ? 'bg-[#014b76]/95 backdrop-blur-md shadow-md'
-          : 'bg-transparent bg-gradient-to-r from-[#014b76]/60 via-[#014b76]/80 to-[#014b76]/95'
+          ? "bg-navy-900/85 backdrop-blur-xl shadow-[0_10px_40px_-20px_rgba(0,0,0,0.8)] border-b border-gold/15"
+          : "bg-gradient-to-b from-navy-950/70 to-transparent"
       }`}
     >
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex items-center h-20">
+      <div className="lux-container">
+        <div className={`flex items-center justify-between transition-all duration-500 ${scrolled ? "h-16" : "h-20 md:h-24"}`}>
           {/* Logo */}
-          {/* Logo */}
-<button
-  onClick={() => handleNavClick('top')}
-  className="flex items-center"
->
-  <img
-    src={logo}
-    alt="Kunjwal City Logo"
-    className="w-24 h-24 object-contain"
-  />
-</button>
+          <button onClick={() => go("top")} className="flex items-center gap-3" aria-label="Kunjwal City home">
+            <img
+              src={logo}
+              alt="Kunjwal City"
+              className={`object-contain transition-all duration-500 ${scrolled ? "h-11" : "h-14 md:h-16"}`}
+            />
+          </button>
 
+          {/* Desktop nav */}
+          <nav className="hidden items-center gap-10 lg:flex">
+            {NAV.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => go(item.id)}
+                className="group relative text-[0.82rem] font-medium uppercase tracking-[0.2em] text-ivory/80 transition-colors hover:text-gold-200"
+              >
+                {item.label}
+                <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-gradient-gold transition-all duration-500 group-hover:w-full" />
+              </button>
+            ))}
+          </nav>
 
-          {/* Navigation */}
-          <div className="ml-auto flex items-center gap-x-8">
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-8">
-              {['Home', 'About', 'Kunjwal', 'Amenities', 'Register', 'Video'].map((item, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => handleNavClick(item.toLowerCase())}
-                  className="text-white hover:bg-gradient-to-r hover:from-[#b38c2e] hover:to-[#e4c152] hover:bg-clip-text hover:text-transparent transition-colors font-medium"
-                >
-                  {item}
-                </button>
-              ))}
-            </nav>
-
-            {/* Mobile Hamburger Button */}
-            <button
-              onClick={toggleMobileMenu}
-              className="hamburger-button lg:hidden text-white hover:text-[#e4c152] transition-colors p-2"
-              aria-label="Toggle mobile menu"
+          {/* Right cluster */}
+          <div className="flex items-center gap-5">
+            <a
+              href={`tel:${PHONE.replace(/\s/g, "")}`}
+              className="hidden items-center gap-2 text-sm font-medium text-ivory/75 transition-colors hover:text-gold-200 xl:flex"
             >
-              {mobileMenuOpen ? <HiX size={24} /> : <HiMenu size={24} />}
+              <FiPhone className="text-gold-300" />
+              {PHONE}
+            </a>
+            <button onClick={() => go("register")} className="btn-gold hidden !px-6 !py-3 text-xs sm:inline-flex">
+              Book a Plot
+            </button>
+            <button
+              onClick={() => setOpen((v) => !v)}
+              className="text-ivory transition-colors hover:text-gold-200 lg:hidden"
+              aria-label="Toggle menu"
+            >
+              {open ? <HiX size={26} /> : <HiMenu size={26} />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 z-40 bg-[#014b76]/80 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="mobile-menu fixed top-20 left-0 right-0 bg-[#014b76] border-t border-[#e4c152]/30 animate-in slide-in-from-top duration-300">
-            <nav className="flex flex-col py-4">
-              {['Home', 'About', 'Kunjwal', 'Amenities', 'Register', 'Video'].map((item, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => handleNavClick(item.toLowerCase())}
-                  className="text-white hover:text-[#e4c152] hover:bg-[#013e63] transition-colors font-medium px-6 py-4 text-left border-b border-[#e4c152]/10"
+      {/* Mobile overlay */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className="fixed inset-0 top-16 z-40 bg-navy-950/97 backdrop-blur-xl lg:hidden"
+          >
+            <nav className="flex flex-col px-8 pt-8">
+              {NAV.map((item, i) => (
+                <motion.button
+                  key={item.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.08 * i + 0.1, duration: 0.5 }}
+                  onClick={() => go(item.id)}
+                  className="flex items-center gap-4 border-b border-gold/10 py-5 text-left font-display text-3xl text-ivory transition-colors hover:text-gold-200"
                 >
-                  {item}
-                </button>
+                  <span className="text-xs font-sans tracking-[0.3em] text-gold-300">0{i + 1}</span>
+                  {item.label}
+                </motion.button>
               ))}
+              <motion.button
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.45, duration: 0.5 }}
+                onClick={() => go("register")}
+                className="btn-gold mt-10 w-full"
+              >
+                Book a Plot
+              </motion.button>
+              <a href={`tel:${PHONE.replace(/\s/g, "")}`} className="mt-6 flex items-center justify-center gap-2 text-ivory/70">
+                <FiPhone className="text-gold-300" /> {PHONE}
+              </a>
             </nav>
-          </div>
-        </div>
-      )}
-    </header>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
   );
 };
 

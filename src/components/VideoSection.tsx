@@ -1,43 +1,72 @@
-import React from 'react';
-import { Play } from 'lucide-react';
-import promoVideo from '@/assets/video.mp4'; // <-- import your video here
+import { useRef, useState } from "react";
+import { FiPlay } from "react-icons/fi";
+import poster from "@/assets/New/12.jpg";
+import { Reveal } from "@/components/lux/Reveal";
+import { Parallax } from "@/components/lux/Parallax";
 
+/**
+ * Click-to-play film reveal. Served statically from /media (not bundled), with
+ * preload="none" so it only streams on play and never taxes the initial page load.
+ * The /media path gets long-lived cache headers via vercel.json.
+ */
+const promoVideo = "/media/film.mp4";
 const VideoSection = () => {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [playing, setPlaying] = useState(false);
+
+  const play = () => {
+    setPlaying(true);
+    ref.current?.play();
+  };
+
   return (
-    <section id="video" className="py-20 bg-white scroll-mt-24">
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="max-w-5xl mx-auto">
-          {/* Video Container */}
-          <div className="relative aspect-video bg-black rounded-lg overflow-hidden shadow-soft">
-            <video 
-              src={promoVideo} 
-              autoPlay 
-              loop 
-              muted 
+    <section id="film" className="scroll-mt-24 relative overflow-hidden bg-navy-950 py-24 md:py-32">
+      <div className="lux-container">
+        <Reveal>
+          <p className="lux-eyebrow mb-6">The Film</p>
+        </Reveal>
+        <Reveal delay={0.05}>
+          <h2 className="max-w-3xl font-display text-4xl font-medium leading-tight text-ivory md:text-6xl">
+            See the vision <span className="italic text-gold-foil">come to life.</span>
+          </h2>
+        </Reveal>
+
+        <Reveal variant="scaleIn" delay={0.1}>
+          <div className="group relative mt-12 aspect-video w-full overflow-hidden rounded-md border border-gold/20 shadow-soft">
+            <video
+              ref={ref}
+              src={promoVideo}
+              poster={poster}
+              controls={playing}
+              loop
               playsInline
-              className="w-full h-full object-cover"
+              preload="none"
+              className="h-full w-full object-cover"
             />
-
-            {/* Logo Overlay */}
-            <div className="absolute top-6 left-6 flex items-center space-x-2">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <svg className="w-5 h-5 text-primary-foreground" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-                </svg>
-              </div>
-              <div>
-                <p className="text-primary font-bold text-sm">KUNJWAL</p>
-                <p className="text-primary text-xs">CITY</p>
-              </div>
-            </div>
-
-            {/* Title Overlay */}
-            
-
-            {/* YouTube Actions */}
-           
+            {!playing && (
+              <>
+                <Parallax speed={0.12} className="pointer-events-none absolute inset-0">
+                  <img src={poster} alt="Kunjwal City film" loading="lazy" decoding="async" className="h-full w-full object-cover" />
+                </Parallax>
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy-950/80 via-navy-950/20 to-navy-950/30" />
+                <button
+                  onClick={play}
+                  aria-label="Play film"
+                  className="absolute inset-0 flex items-center justify-center"
+                >
+                  <span className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-gold text-navy-950 shadow-gold transition-transform duration-500 group-hover:scale-110 md:h-24 md:w-24">
+                    <FiPlay className="ml-1" size={30} />
+                  </span>
+                </button>
+                <div className="absolute bottom-6 left-6 flex items-center gap-3">
+                  <span className="font-display text-xl text-ivory">Kunjwal City</span>
+                  <span className="h-4 w-px bg-gold/40" />
+                  <span className="text-[0.7rem] uppercase tracking-[0.25em] text-gold-200">Official Film</span>
+                </div>
+              </>
+            )}
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

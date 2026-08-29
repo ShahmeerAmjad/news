@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
@@ -13,7 +14,36 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        display: ['"Cormorant Garamond"', "ui-serif", "Georgia", "serif"],
+        sans: ['"Manrope"', "ui-sans-serif", "system-ui", "sans-serif"],
+        // Urdu faces, loaded on demand by the /draw page only.
+        urdu: ['"Noto Naskh Arabic"', '"Jameel Noori Nastaleeq"', "ui-sans-serif", "sans-serif"],
+        nastaliq: ['"Noto Nastaliq Urdu"', '"Jameel Noori Nastaleeq"', "ui-serif", "serif"],
+      },
+      letterSpacing: {
+        luxe: "0.35em",
+      },
       colors: {
+        navy: {
+          950: "#01223a",
+          900: "#012a44",
+          800: "#013a5c",
+          DEFAULT: "#014b76",
+          600: "#0a628f",
+          500: "#1d7aab",
+        },
+        gold: {
+          900: "#7c5e1a",
+          700: "#9a761f",
+          DEFAULT: "#b38c2e",
+          400: "#d8ab3e",
+          300: "#e4c152",
+          200: "#f0d68a",
+        },
+        ivory: "#f8f4ea",
+        sand: "#efe6d4",
+        porcelain: "#fdfbf6",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -67,10 +97,12 @@ export default {
       backgroundImage: {
         "gradient-primary": "linear-gradient(135deg, #b38c2e, #e4c152)",
         "gradient-hero": "linear-gradient(180deg, #b38c2e, #e4c152)",
+        "gradient-gold": "linear-gradient(100deg, #9a761f 0%, #e4c152 45%, #f0d68a 60%, #b38c2e 100%)",
       },
       boxShadow: {
-        gold: "0 10px 30px rgba(179, 140, 46, 0.3)",
-        soft: "0 4px 20px rgba(1, 75, 118, 0.5)",
+        gold: "0 20px 60px -20px rgba(179, 140, 46, 0.45)",
+        soft: "0 30px 80px -30px rgba(1, 34, 58, 0.6)",
+        "inset-gold": "inset 0 0 0 1px rgba(228,193,82,0.25)",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -86,12 +118,27 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "gold-shimmer": {
+          "0%": { backgroundPosition: "200% 0" },
+          "100%": { backgroundPosition: "-200% 0" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        "ken-burns": {
+          "0%": { transform: "scale(1.05)" },
+          "100%": { transform: "scale(1.18)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "gold-shimmer": "gold-shimmer 6s linear infinite",
+        float: "float 6s ease-in-out infinite",
+        "ken-burns": "ken-burns 18s ease-out forwards",
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 } satisfies Config;

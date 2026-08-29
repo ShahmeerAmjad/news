@@ -2,94 +2,86 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Updated design system with new navy blue (#014b76) and golden gradient (#b38c2e → #e4c152) */
+/* ============================================================
+   KUNJWAL CITY — Luxury design system
+   Navy #014b76 + gold #b38c2e→#e4c152, ivory light sections.
+   Display: Cormorant Garamond · Body: Manrope
+   ============================================================ */
 
 @layer base {
   :root {
-    /* Base Colors */
-    --background: 204 98% 23%; /* #014b76 */
-    --foreground: 0 0% 100%;
+    /* --- Brand scale (raw) --- */
+    --navy-950: #01223a;
+    --navy-900: #012a44;
+    --navy-800: #013a5c;
+    --navy: #014b76;
+    --navy-600: #0a628f;
+    --navy-500: #1d7aab;
 
-    --card: 204 98% 23%;
-    --card-foreground: 0 0% 100%;
+    --gold-900: #7c5e1a;
+    --gold-700: #9a761f;
+    --gold: #b38c2e;
+    --gold-400: #d8ab3e;
+    --gold-300: #e4c152;
+    --gold-200: #f0d68a;
 
-    --popover: 204 98% 23%;
-    --popover-foreground: 0 0% 100%;
+    --ivory: #f8f4ea;
+    --sand: #efe6d4;
+    --porcelain: #fdfbf6;
 
-    /* Primary (Golden Gradient Base) */
-    --primary: 43 61% 49%;
-    --primary-foreground: 0 0% 100%;
+    /* --- shadcn semantic tokens (HSL) --- */
+    --background: 204 98% 23%;
+    --foreground: 40 33% 96%;
 
-    /* Secondary (Navy Blue Base) */
+    --card: 204 96% 18%;
+    --card-foreground: 40 33% 96%;
+
+    --popover: 204 96% 18%;
+    --popover-foreground: 40 33% 96%;
+
+    --primary: 43 61% 44%;
+    --primary-foreground: 204 98% 14%;
+
     --secondary: 204 98% 23%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary-foreground: 40 33% 96%;
 
-    --muted: 204 98% 28%;
-    --muted-foreground: 0 0% 70%;
+    --muted: 204 60% 30%;
+    --muted-foreground: 40 20% 78%;
 
-    /* Accent and Border */
-    --accent: 43 61% 49%;
-    --accent-foreground: 0 0% 100%;
-    --border: 204 98% 28%;
-    --input: 204 98% 26%;
-    --ring: 43 61% 49%;
+    --accent: 46 67% 60%;
+    --accent-foreground: 204 98% 14%;
 
-    --radius: 0.5rem;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
 
-    /* Custom Kunjwal Colors */
-    --kunjwal-gold-dark: 43 36% 45%; /* #b38c2e */
-    --kunjwal-gold-light: 46 67% 56%; /* #e4c152 */
-    --kunjwal-black: 204 98% 23%; /* replaced black with navy blue */
+    --border: 43 40% 60%;
+    --input: 204 40% 30%;
+    --ring: 46 67% 56%;
+
+    --radius: 0.25rem;
+
+    /* --- Custom Kunjwal tokens (kept for legacy components) --- */
+    --kunjwal-gold-dark: 43 36% 45%;
+    --kunjwal-gold-light: 46 67% 56%;
+    --kunjwal-black: 204 98% 14%;
     --kunjwal-navy: 204 98% 23%;
-    --kunjwal-navy-light: 204 98% 30%;
+    --kunjwal-navy-light: 204 92% 29%;
 
-    /* Gradients */
     --gradient-primary: linear-gradient(135deg, #b38c2e, #e4c152);
     --gradient-hero: linear-gradient(180deg, #b38c2e, #e4c152);
+    --gradient-gold: linear-gradient(100deg, #9a761f 0%, #e4c152 45%, #f0d68a 60%, #b38c2e 100%);
 
-    /* Shadows */
-    --shadow-gold: 0 10px 30px rgba(179, 140, 46, 0.3);
-    --shadow-soft: 0 4px 20px rgba(1, 75, 118, 0.5);
+    --shadow-gold: 0 20px 60px -20px rgba(179, 140, 46, 0.45);
+    --shadow-soft: 0 30px 80px -30px rgba(1, 34, 58, 0.6);
 
-    /* Sidebar */
-    --sidebar-background: 204 98% 23%;
-    --sidebar-foreground: 0 0% 100%;
+    --sidebar-background: 204 96% 18%;
+    --sidebar-foreground: 40 33% 96%;
     --sidebar-primary: 43 61% 49%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 204 98% 30%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 204 98% 28%;
-    --sidebar-ring: 43 61% 49%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 204 92% 29%;
+    --sidebar-accent-foreground: 40 33% 96%;
+    --sidebar-border: 204 60% 30%;
+    --sidebar-ring: 46 67% 56%;
   }
 }
 
@@ -98,7 +90,159 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-[#012a44] text-[#f8f4ea];
+    font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+    font-feature-settings: "ss01", "cv01";
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgba(228, 193, 82, 0.28);
+    color: #fff;
+  }
+
+  /* Keyboard-only focus ring. Mouse/touch users never see it, so the gold
+     outline never fights the design — but tab navigation stays visible. */
+  :focus-visible {
+    outline: 2px solid #e4c152;
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Skip link — hidden until focused, then parks over the hero. */
+  .skip-link {
+    @apply fixed left-4 top-4 z-[100] -translate-y-24 rounded-sm px-5 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-[#012a44] transition-transform duration-200;
+    background: var(--gradient-gold);
+  }
+  .skip-link:focus-visible {
+    @apply translate-y-0;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: "Cormorant Garamond", ui-serif, Georgia, serif;
+    font-weight: 500;
+  }
+}
+
+/* When Lenis smooth-scroll is active */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+@layer components {
+  /* Section frame */
+  .lux-container {
+    @apply mx-auto w-full max-w-[1280px] px-6 md:px-10 lg:px-16;
+  }
+
+  /* Small architectural label: 01 · AMENITIES */
+  .lux-eyebrow {
+    @apply inline-flex items-center gap-3 text-[0.7rem] font-semibold uppercase tracking-[0.35em];
+    color: #d9b64e;
+  }
+  .lux-eyebrow::before {
+    content: "";
+    width: 2.25rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #b38c2e);
+    display: inline-block;
+  }
+
+  /* Gold foil gradient text */
+  .text-gold-foil {
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Thin hairline rule */
+  .lux-rule {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(228, 193, 82, 0.5), transparent);
+  }
+
+  /* Primary gold button */
+  .btn-gold {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-sm px-8 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#012a44] transition-all duration-500;
+    background: var(--gradient-gold);
+    background-size: 200% 100%;
+    box-shadow: var(--shadow-gold);
+  }
+  .btn-gold:hover {
+    background-position: 100% 0;
+    transform: translateY(-2px);
+  }
+
+  /* Ghost / outline button */
+  .btn-ghost-gold {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-sm border px-8 py-4 text-sm font-semibold uppercase tracking-[0.18em] transition-all duration-500;
+    border-color: rgba(228, 193, 82, 0.4);
+    color: #f0d68a;
+  }
+  .btn-ghost-gold:hover {
+    border-color: #e4c152;
+    background: rgba(228, 193, 82, 0.08);
+  }
+
+  /* Glass card */
+  .lux-glass {
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(228, 193, 82, 0.16);
+    backdrop-filter: blur(14px);
+  }
+}
+
+@layer utilities {
+  /* Film-grain / noise overlay */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .bg-navy-radial {
+    background:
+      radial-gradient(120% 100% at 50% -10%, #0a628f 0%, #014b76 34%, #012a44 76%, #01223a 100%);
+  }
+
+  .bg-ivory {
+    background: #f8f4ea;
+  }
+
+  .shimmer-line {
+    background: linear-gradient(90deg, transparent, rgba(228, 193, 82, 0.7), transparent);
+  }
+
+  /* Gold-foil text fill — used for the accent word in display headlines. */
+  .text-gradient-gold {
+    background: linear-gradient(100deg, #9a761f 0%, #e4c152 45%, #f0d68a 60%, #b38c2e 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }

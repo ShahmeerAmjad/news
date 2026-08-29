@@ -1,200 +1,194 @@
-import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { toast } from "sonner";
+import { FiPhone, FiCheck } from "react-icons/fi";
+import { FaWhatsapp } from "react-icons/fa";
+import { Reveal } from "@/components/lux/Reveal";
+import { submitLead, whatsappFallbackUrl, type Lead } from "@/lib/lead";
 
-const RegistrationForm = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    city: "",
-    country: "",
-    message: "",
-  });
+const schema = z.object({
+  name: z.string().trim().min(2, "Please enter your full name"),
+  phone: z
+    .string()
+    .trim()
+    .min(7, "Please enter a valid phone number")
+    .regex(/^[+\d][\d\s()-]{6,}$/, "Please enter a valid phone number"),
+  email: z.string().trim().email("Enter a valid email").optional().or(z.literal("")),
+  country: z.string().trim().optional(),
+  city: z.string().trim().optional(),
+  plotSize: z.string().trim().optional(),
+  purpose: z.string().trim().optional(),
+  timeline: z.string().trim().optional(),
+  message: z.string().trim().optional(),
+});
 
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+const PLOT_SIZES = ["5 Marla", "7 Marla", "10 Marla", "Commercial", "Not sure yet"];
+const PURPOSES = ["To build my home", "Investment", "Both"];
+const TIMELINES = ["Ready to book", "Within 1–3 months", "Just exploring"];
 
-  const handleChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-    setErrors((prev) => ({ ...prev, [field]: "" }));
-  };
+type FormValues = z.infer<typeof schema>;
 
-  const validateForm = () => {
-    let newErrors: { [key: string]: string } = {};
+const TRUST = [
+  "Callback within 24 hours",
+  "No obligation, no pressure",
+  "Transparent pricing & payment plans",
+];
 
-    if (!formData.name.trim()) newErrors.name = "Full name is required";
-    if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
-    if (!formData.email.trim()) newErrors.email = "Email is required";
-    if (!formData.country) newErrors.country = "Country is required";
+const RegistrationForm = ({ source = "home" }: { source?: string }) => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<FormValues>({ resolver: zodResolver(schema) });
 
-    if (formData.country === "pakistan" && !formData.city.trim()) {
-      newErrors.city = "City is required for Pakistan";
-    }
+  const onSubmit = async (values: FormValues) => {
+    const lead: Lead = { ...values, source };
+    const { ok } = await submitLead(lead);
 
-    if (!formData.message.trim()) newErrors.message = "Message is required";
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (validateForm()) {
-      try {
-        const res = await fetch("https://city-backend-one.vercel.app/api/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
-
-        if (res.ok) {
-          alert("Form submitted successfully!");
-          setFormData({
-            name: "",
-            phone: "",
-            email: "",
-            city: "",
-            country: "",
-            message: "",
-          });
-        } else {
-          const data = await res.json();
-          alert(data.error || "Something went wrong!");
-        }
-      } catch (err) {
-        console.error(err);
-        alert("Failed to connect to server.");
-      }
+    if (ok) {
+      toast.success("Thank you! Our team will contact you within 24 hours.");
+      reset();
+    } else {
+      // Never lose the lead — hand off to WhatsApp with details prefilled.
+      toast("Connecting you to our team on WhatsApp…", {
+        description: "Tap to send your details directly.",
+        action: {
+          label: "Open WhatsApp",
+          onClick: () => window.open(whatsappFallbackUrl(lead), "_blank"),
+        },
+      });
+      window.open(whatsappFallbackUrl(lead), "_blank");
     }
   };
+
+  const field =
+    "w-full rounded-sm border border-gold/25 bg-white/5 px-4 py-3 text-ivory placeholder:text-ivory/35 outline-none transition-colors focus:border-gold-300 focus:bg-white/10";
+  const label = "mb-2 block text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-gold-200";
 
   return (
-    <section id="register" className="py-20 bg-slate-100 scroll-mt-24">
-      <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
-        <h2 className="text-4xl lg:text-5xl font-bold text-center mb-12 bg-gradient-to-r from-[#b38c2e] to-[#e4c152] bg-clip-text text-transparent">
-          Register Your Interest
-        </h2>
+    <section id="register" className="scroll-mt-24 relative overflow-hidden bg-navy-radial grain py-24 md:py-32">
+      <div className="lux-container">
+        <div className="grid items-start gap-14 lg:grid-cols-[0.9fr_1.1fr]">
+          {/* Left — pitch */}
+          <div>
+            <Reveal>
+              <p className="lux-eyebrow mb-6">Reserve Now</p>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <h2 className="font-display text-4xl font-medium leading-tight text-ivory md:text-6xl">
+                Book your plot <span className="italic text-gold-foil">today.</span>
+              </h2>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="mt-6 max-w-md text-ivory/70">
+                Share your details and a Kunjwal City advisor will reach out with plot
+                availability, pricing and the current payment plan.
+              </p>
+            </Reveal>
 
-        <form className="space-y-8" onSubmit={handleSubmit}>
-          {/* Full Name & Phone */}
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="space-y-2">
-              <Label htmlFor="name" className="text-lg font-medium text-[#b38c2e]">
-                Full name *
-              </Label>
-              <Input
-                id="name"
-                type="text"
-                value={formData.name}
-                onChange={(e) => handleChange("name", e.target.value)}
-                className="bg-transparent border-[#b38c2e]/30 border-b-2 border-t-0 border-x-0 rounded-none text-black"
-              />
-              {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
-            </div>
+            <Reveal delay={0.15}>
+              <ul className="mt-8 space-y-3">
+                {TRUST.map((t) => (
+                  <li key={t} className="flex items-center gap-3 text-ivory/80">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-gold text-navy-950">
+                      <FiCheck size={13} />
+                    </span>
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
 
-            <div className="space-y-2">
-              <Label htmlFor="phone" className="text-lg font-medium text-[#b38c2e]">
-                Phone No. *
-              </Label>
-              <Input
-                id="phone"
-                type="tel"
-                value={formData.phone}
-                onChange={(e) => handleChange("phone", e.target.value)}
-                className="bg-transparent border-[#b38c2e]/30 border-b-2 border-t-0 border-x-0 rounded-none text-black"
-              />
-              {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
-            </div>
+            <Reveal delay={0.2}>
+              <div className="mt-10 flex flex-wrap gap-4">
+                <a href="tel:+923111786602" className="btn-ghost-gold !px-6 !py-3 text-xs">
+                  <FiPhone /> +92 311 1786602
+                </a>
+                <a
+                  href="https://wa.me/923111786602"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-ghost-gold !px-6 !py-3 text-xs"
+                >
+                  <FaWhatsapp /> WhatsApp
+                </a>
+              </div>
+            </Reveal>
           </div>
 
-          {/* Email */}
-          <div className="space-y-2">
-            <Label htmlFor="email" className="text-lg font-medium text-[#b38c2e]">
-              Email Address *
-            </Label>
-            <Input
-              id="email"
-              type="email"
-              value={formData.email}
-              onChange={(e) => handleChange("email", e.target.value)}
-              className="bg-transparent border-[#b38c2e]/30 border-b-2 border-t-0 border-x-0 rounded-none text-black"
-            />
-            {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-          </div>
+          {/* Right — form card */}
+          <Reveal variant="fadeUp" delay={0.1}>
+            <form onSubmit={handleSubmit(onSubmit)} className="lux-glass rounded-md p-6 md:p-9" noValidate>
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label className={label} htmlFor="name">Full name *</label>
+                  <input id="name" className={field} placeholder="Enter your full name" {...register("name")} />
+                  {errors.name && <p className="mt-1 text-sm text-red-300">{errors.name.message}</p>}
+                </div>
+                <div>
+                  <label className={label} htmlFor="phone">Phone number *</label>
+                  <input id="phone" type="tel" className={field} placeholder="+92 300 1234567" {...register("phone")} />
+                  {errors.phone && <p className="mt-1 text-sm text-red-300">{errors.phone.message}</p>}
+                </div>
+              </div>
 
-          {/* Country */}
-          <div className="space-y-2">
-            <Label htmlFor="country" className="text-lg font-medium text-[#b38c2e]">
-              Country *
-            </Label>
-            <Select onValueChange={(value) => handleChange("country", value)} value={formData.country}>
-              <SelectTrigger className="bg-transparent border-[#b38c2e]/30 border-b-2 border-t-0 border-x-0 rounded-none text-black">
-                <SelectValue placeholder="Select Country" />
-              </SelectTrigger>
-              <SelectContent className="bg-card border-border text-white">
-                <SelectItem value="pakistan">Pakistan</SelectItem>
-                <SelectItem value="uae">UAE</SelectItem>
-                <SelectItem value="uk">United Kingdom</SelectItem>
-                <SelectItem value="usa">United States</SelectItem>
-                <SelectItem value="spain">Spain</SelectItem>
-                <SelectItem value="canada">Canada</SelectItem>
-              </SelectContent>
-            </Select>
-            {errors.country && <p className="text-red-500 text-sm">{errors.country}</p>}
-          </div>
+              <div className="mt-5">
+                <label className={label} htmlFor="email">Email <span className="text-ivory/30">(optional)</span></label>
+                <input id="email" type="email" className={field} placeholder="you@example.com" {...register("email")} />
+                {errors.email && <p className="mt-1 text-sm text-red-300">{errors.email.message}</p>}
+              </div>
 
-          {/* City */}
-          <div className="space-y-2">
-            <Label htmlFor="city" className="text-lg font-medium text-[#b38c2e]">
-              City {formData.country === "pakistan" && "*"}
-            </Label>
-            <Input
-              id="city"
-              type="text"
-              value={formData.city}
-              onChange={(e) => handleChange("city", e.target.value)}
-              className="bg-transparent border-[#b38c2e]/30 border-b-2 border-t-0 border-x-0 rounded-none text-black"
-              placeholder="Enter your city"
-            />
-            {errors.city && <p className="text-red-500 text-sm">{errors.city}</p>}
-          </div>
+              <div className="mt-5 grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label className={label} htmlFor="country">Country <span className="text-ivory/30">(optional)</span></label>
+                  <input id="country" className={field} placeholder="Pakistan, UAE, UK…" {...register("country")} />
+                </div>
+                <div>
+                  <label className={label} htmlFor="city">City <span className="text-ivory/30">(optional)</span></label>
+                  <input id="city" className={field} placeholder="Lahore, Dubai, London…" {...register("city")} />
+                </div>
+              </div>
 
-          {/* Message */}
-          <div className="space-y-2">
-            <Label htmlFor="message" className="text-lg font-medium text-[#b38c2e]">
-              Message *
-            </Label>
-            <Textarea
-              id="message"
-              value={formData.message}
-              onChange={(e) => handleChange("message", e.target.value)}
-              className="bg-transparent border-[#b38c2e]/30 border-b-2 border-t-0 border-x-0 rounded-none min-h-[100px] resize-none text-black"
-            />
-            {errors.message && <p className="text-red-500 text-sm">{errors.message}</p>}
-          </div>
+              <div className="mt-5 grid gap-5 sm:grid-cols-3">
+                <div>
+                  <label className={label} htmlFor="plotSize">Plot of interest</label>
+                  <select id="plotSize" className={`${field} appearance-none`} defaultValue="" {...register("plotSize")}>
+                    <option value="" disabled className="bg-navy-900">Select…</option>
+                    {PLOT_SIZES.map((o) => <option key={o} value={o} className="bg-navy-900">{o}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className={label} htmlFor="purpose">Purpose</label>
+                  <select id="purpose" className={`${field} appearance-none`} defaultValue="" {...register("purpose")}>
+                    <option value="" disabled className="bg-navy-900">Select…</option>
+                    {PURPOSES.map((o) => <option key={o} value={o} className="bg-navy-900">{o}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className={label} htmlFor="timeline">Timeline</label>
+                  <select id="timeline" className={`${field} appearance-none`} defaultValue="" {...register("timeline")}>
+                    <option value="" disabled className="bg-navy-900">Select…</option>
+                    {TIMELINES.map((o) => <option key={o} value={o} className="bg-navy-900">{o}</option>)}
+                  </select>
+                </div>
+              </div>
 
-          {/* Submit */}
-          <div className="pt-8 text-center">
-            <Button
-              type="submit"
-              size="lg"
-              className="bg-gradient-to-r from-[#b38c2e] to-[#e4c152] hover:from-[#e4c152] hover:to-[#b38c2e] text-white px-12 py-4 text-lg font-medium rounded-xl shadow-[0_0_20px_rgba(227,193,82,0.4)] transition-all duration-300"
-            >
-              Submit
-            </Button>
-          </div>
-        </form>
+              <div className="mt-5">
+                <label className={label} htmlFor="message">Message <span className="text-ivory/30">(optional)</span></label>
+                <textarea id="message" rows={3} className={`${field} resize-none`} placeholder="Preferred plot size or any questions…" {...register("message")} />
+              </div>
+
+              <button type="submit" disabled={isSubmitting} className="btn-gold mt-7 w-full disabled:opacity-60">
+                {isSubmitting ? "Submitting…" : "Request a Callback"}
+              </button>
+              <p className="mt-4 text-center text-xs text-ivory/45">
+                Your information is safe with us. We respect your privacy.
+              </p>
+            </form>
+          </Reveal>
+        </div>
       </div>
     </section>
   );
