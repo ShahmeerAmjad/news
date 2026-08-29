@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { HiMenu, HiX } from "react-icons/hi";
 import { FiPhone } from "react-icons/fi";
 import { AnimatePresence, motion } from "framer-motion";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo-horizontal.png";
 
 const NAV = [
   { label: "Overview", id: "overview" },
@@ -51,8 +51,8 @@ const Header = () => {
           <button onClick={() => go("top")} className="flex items-center gap-3" aria-label="Kunjwal City home">
             <img
               src={logo}
-              alt="Kunjwal City"
-              className={`object-contain transition-all duration-500 ${scrolled ? "h-11" : "h-14 md:h-16"}`}
+              alt="Kunjwal City — Gujrat"
+              className={`object-contain transition-all duration-500 ${scrolled ? "h-8" : "h-10 md:h-12"}`}
             />
           </button>
 

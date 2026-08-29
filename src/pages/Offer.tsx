@@ -12,7 +12,7 @@ import {
 } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import heroImg from "@/assets/IMG-20250920-WA0010.jpg";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo-horizontal.png";
 import { Reveal, RevealGroup } from "@/components/lux/Reveal";
 import { Counter } from "@/components/lux/Counter";
 import RegistrationForm from "@/components/RegistrationForm";
@@ -110,7 +110,7 @@ const Offer = () => {
       <header className="fixed inset-x-0 top-0 z-50 border-b border-gold/15 bg-navy-950/80 backdrop-blur-md">
         <div className="lux-container flex h-16 items-center justify-between">
           <a href="#top" className="flex items-center gap-3">
-            <img src={logo} alt="Kunjwal City" className="h-8 w-auto" />
+            <img src={logo} alt="Kunjwal City — Gujrat" className="h-9 w-auto" />
             <span className="hidden font-display text-lg tracking-wide text-ivory sm:block">
               Kunjwal City
             </span>
@@ -369,7 +369,7 @@ const Offer = () => {
       <footer className="border-t border-gold/15 bg-navy-950 py-10">
         <div className="lux-container flex flex-col items-center justify-between gap-6 md:flex-row">
           <div className="flex items-center gap-3">
-            <img src={logo} alt="Kunjwal City" className="h-8 w-auto" />
+            <img src={logo} alt="Kunjwal City — Gujrat" className="h-9 w-auto" />
             <div>
               <p className="font-display text-lg text-ivory">Kunjwal City</p>
               <p className="text-xs text-ivory/50">By AYS Developers Pvt. Ltd. · Gujrat</p>

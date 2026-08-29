@@ -16,6 +16,8 @@ export default {
     extend: {
       fontFamily: {
         display: ['"Cormorant Garamond"', "ui-serif", "Georgia", "serif"],
+        // Trajan-style Roman capitals — hero headline only.
+        hero: ['"Cinzel"', '"Cormorant Garamond"', "ui-serif", "Georgia", "serif"],
         sans: ['"Manrope"', "ui-sans-serif", "system-ui", "sans-serif"],
         // Urdu faces, loaded on demand by the /draw page only.
         urdu: ['"Noto Naskh Arabic"', '"Jameel Noori Nastaleeq"', "ui-sans-serif", "sans-serif"],

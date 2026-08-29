@@ -61,8 +61,8 @@ const HeroSection = () => {
               Kunjwal City · Gujrat
             </motion.p>
 
-            <h1 className="font-display text-[2.9rem] font-medium leading-[0.95] tracking-tight text-ivory sm:text-7xl lg:text-[6.2rem]">
-              <span className="flex flex-wrap gap-x-5">
+            <h1 className="font-hero text-[2.15rem] font-medium leading-[1.08] tracking-[0.02em] text-ivory sm:text-[3.4rem] lg:text-[4.8rem]">
+              <span className="flex flex-wrap gap-x-4">
                 {HEADLINE.map((w, i) => (
                   <span key={i} className="overflow-hidden py-1">
                     <motion.span variants={wordUp} className="inline-block">
@@ -72,7 +72,7 @@ const HeroSection = () => {
                 ))}
               </span>
               <span className="block overflow-hidden py-1">
-                <motion.span variants={wordUp} className="inline-block italic text-gold-foil">
+                <motion.span variants={wordUp} className="inline-block text-gold-foil">
                   {HEADLINE_ACCENT}
                 </motion.span>
               </span>
